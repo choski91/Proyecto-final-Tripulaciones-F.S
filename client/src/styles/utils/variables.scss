@@ -1,0 +1,24 @@
+// Paleta inspirada en Capgemini (ajusta si tienes los códigos oficiales)
+$color-primary: #0070AD;      // Capgemini Blue aprox.
+$color-primary-600: #005B8C;  // Hover/darken
+$color-accent: #00A1DE;       // Sky Blue aprox.
+$color-accent-2: #2DC5F4;     // Accent claro
+
+$color-bg: #0b0f14;           // Fondo app oscuro elegante
+$color-surface: #121822;      // Tarjetas
+$color-text: #e9eef3;         // Texto principal
+$color-text-muted: #b9c2cc;   // Texto secundario
+$color-border: #223244;       // Bordes
+$color-success: #2ecc71;
+$color-error: #e74c3c;
+$shadow-1: 0 6px 18px rgba(0, 0, 0, .25);
+
+$radius-lg: 16px;
+$radius-sm: 10px;
+
+$font-stack: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+
+// Breakpoints (mobile-first)
+$bp-sm: 480px;
+$bp-md: 768px;
+$bp-lg: 1024px;
