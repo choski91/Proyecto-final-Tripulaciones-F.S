@@ -1,5 +1,5 @@
 {
-  "name": "proyecto-final-tripulaciones-" ,
+  "name": "proyecto-final-tripulaciones-",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -9,7 +9,7 @@
     "server": "nodemon app.js",
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "dev": "nodemon app.js",
-    "deploy":"concurrently \"node index.js\" \"npm run client\""
+    "deploy": "concurrently \"node index.js\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -23,10 +23,13 @@
   },
   "homepage": "https://github.com/choski91/Proyecto-final-Tripulaciones-F.S#readme",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "create-react-component-folder": "^0.3.7",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.1",
     "pg": "^8.16.3"
   },
   "devDependencies": {
