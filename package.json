@@ -1,6 +1,7 @@
 {
-  "name": "proyecto-final-tripulaciones-" ,
+  "name": "proyecto-final-tripulaciones-",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "app.js",
   "scripts": {
@@ -9,7 +10,7 @@
     "server": "nodemon app.js",
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "dev": "nodemon app.js",
-    "deploy":"concurrently \"node index.js\" \"npm run client\""
+    "deploy": "concurrently \"node index.js\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -26,10 +27,12 @@
     "cors": "^2.8.5",
     "create-react-component-folder": "^0.3.7",
     "dotenv": "^17.2.2",
-    "express": "^5.1.0",
     "pg": "^8.16.3"
   },
   "devDependencies": {
+    "axios": "^1.12.2",
+    "express": "^5.1.0",
+    "mongoose": "^8.18.1",
     "nodemon": "^3.1.10"
   }
 }
