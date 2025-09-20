@@ -22,11 +22,12 @@ const userRoutes = require('./routes/users.routes');
 
 app.use('/users', userRoutes);
 
-app.use(express.static(path.join(__dirname, "client", "build")));
+app.use(express.static(path.join(__dirname, "client", "dist")));
 
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-// });
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
+
 
 app.listen(port, () => {
   console.log(`Servidor iniciado en el puerto ${port}`);
