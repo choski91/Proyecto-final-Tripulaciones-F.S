@@ -11,4 +11,5 @@ export const getFileReport = async (hash) => {
     },
   });
   return response.data;
+
 };
