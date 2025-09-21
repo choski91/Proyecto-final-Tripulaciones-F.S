@@ -19,14 +19,16 @@ app.use(express.urlencoded({ extended: true }));
 
 
 const userRoutes = require('./routes/users.routes');
+const alertRoutes = require('./routes/alert.routes');
 
 app.use('/users', userRoutes);
+app.use('/alert', alertRoutes);
 
 app.use(express.static(path.join(__dirname, "client", "dist")));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+// });
 
 
 app.listen(port, () => {
