@@ -1,7 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { AgGridReact } from "ag-grid-react";
+import "ag-grid-community/styles/ag-theme-alpine.css";
+import { ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
+ModuleRegistry.registerModules([AllCommunityModule]);
 
-const AlertGraph = () => {
-  return <div>AlertGraph</div>;
-};
+// Cambia la URL si tu endpoint es diferente
+const API_URL = "http://localhost:3000/alert";
+
+const columnDefs = [
+  { headerName: "ID", field: "id", sortable: true, filter: true },
+  { headerName: "Fecha", field: "fecha", sortable: true, filter: true },
+  { headerName: "Usuario", field: "usuario", sortable: true, filter: true },
+  { headerName: "IP", field: "ip", sortable: true, filter: true },
+  { headerName: "Mensaje", field: "mensaje", sortable: true, filter: true },
+];
+
+function AlertGraph() {
+  const [rowData, setRowData] = useState([]);
+
+  useEffect(() => {
+    fetch(API_URL)
+      .then((res) => res.json())
+      .then((data) => setRowData(data))
+      .catch((err) => console.error(err));
+  }, []);
+
+  return (
+    <div className="ag-theme-alpine" style={{ height: 400, width: "100%" }}>
+      <AgGridReact
+        rowData={rowData}
+        columnDefs={columnDefs}
+        pagination={true}
+        paginationPageSize={10}
+        paginationPageSizeSelector={[10, 20, 50, 100]}
+      />
+    </div>
+  );
+}
 
 export default AlertGraph;
