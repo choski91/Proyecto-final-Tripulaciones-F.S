@@ -6,8 +6,7 @@ import AlertSearch from "./AlertSearch";
 
 const API = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
-export default function AlertContainer() {
-  const [alerts, setAlerts] = useState([]);
+export default function AlertContainer({ alerts }) {
   const [loading, setLoading] = useState(false);
 
   const simulateAttack = async () => {

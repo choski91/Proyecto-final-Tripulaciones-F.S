@@ -1,5 +1,4 @@
 const pool = require("../config/sqlConfig");
-const bcrypt = require("bcrypt");
 const queries = require("../utils/queries"); // Queries SQL
 
 const createUser = async (name, email, hashed_password) => {
