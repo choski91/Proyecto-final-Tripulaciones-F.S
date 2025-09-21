@@ -9,10 +9,22 @@ const API_URL = "http://localhost:3000/alert";
 
 const columnDefs = [
   { headerName: "ID", field: "id", sortable: true, filter: true },
-  { headerName: "Fecha", field: "fecha", sortable: true, filter: true },
+  {
+    headerName: "Fecha",
+    field: "fecha",
+    sortable: true,
+    filter: true,
+    valueFormatter: params => {
+      if (!params.value) return "";
+      const date = new Date(params.value);
+      return date.toLocaleDateString();
+    }
+  },
   { headerName: "Usuario", field: "usuario", sortable: true, filter: true },
   { headerName: "IP", field: "ip", sortable: true, filter: true },
-  { headerName: "Mensaje", field: "mensaje", sortable: true, filter: true },
+  { headerName: "Hora", field: "hora", sortable: true, filter: true },
+  { headerName: "País", field: "pais", sortable: true, filter: true },
+  { headerName: "Intentos", field: "intentos", sortable: true, filter: true },
 ];
 
 function AlertGraph() {
