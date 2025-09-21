@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import SignUp from "./pages/SignUp";
 import LogIn from "./pages/Login";
 import AlertContainer from "./components/Main/AlertContainer";
+// import "./styles/styles.scss";
 
 function App() {
   return (
