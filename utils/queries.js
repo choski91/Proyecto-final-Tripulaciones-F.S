@@ -7,6 +7,9 @@ const queries = {
 
     //Alert
     getAlert: `SELECT * FROM alertas_login_sospechoso;`,
+
+    //PHISHING
+    getAlertPhishing: `SELECT * FROM alertas_phishing;`,
 }
 
 module.exports = queries;
