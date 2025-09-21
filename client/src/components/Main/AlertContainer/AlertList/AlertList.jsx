@@ -1,7 +1,15 @@
+// AlertList.jsx
 import React from "react";
+import AlertCard from "./AlertCard";
 
-const AlertList = () => {
-  return <div>AlertList</div>;
-};
+export default function AlertList({ alerts }) {
+  if (!alerts.length) return <p>No hay alertas</p>;
 
-export default AlertList;
+  return (
+    <div className="alert-list">
+      {alerts.map((alert) => (
+        <AlertCard key={alert.id} alert={alert} />
+      ))}
+    </div>
+  );
+}
