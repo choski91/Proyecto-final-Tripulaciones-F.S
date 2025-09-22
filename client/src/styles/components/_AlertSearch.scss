@@ -4,8 +4,10 @@
 .alert-search {
   display: flex;
   align-items: center;
+  justify-content: center; // centra el buscador
   gap: 0.75rem; // espacio entre label y select
   margin: 1rem 0;
+  width: 100%;
 
   label {
     font-size: 0.95rem;
@@ -37,7 +39,7 @@
   // móvil: que se apilen
   @media (max-width: 600px) {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center; // centra en móvil
 
     select {
       width: 100%;

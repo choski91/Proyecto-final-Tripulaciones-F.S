@@ -2,15 +2,19 @@ import { Route, Routes } from "react-router-dom";
 import SignUp from "./pages/SignUp";
 import LogIn from "./pages/Login";
 import AlertContainer from "./components/Main/AlertContainer";
-// import "./styles/styles.scss";
+import Footer from "./components/Footer/Footer"
+
 
 function App() {
   return (
-    <Routes>
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/login" element={<LogIn />} />
-      <Route path="/alerts" element={<AlertContainer />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<LogIn />} />
+        <Route path="/alerts" element={<AlertContainer />} />
+      </Routes>
+      <Footer />
+    </>
   );
 }
 
