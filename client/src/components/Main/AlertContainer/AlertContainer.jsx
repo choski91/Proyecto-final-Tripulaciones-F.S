@@ -11,22 +11,34 @@ export default function AlertContainer() {
   
   // Tabla 2: alertas simuladas desde API externa
   const [simulatedAlerts, setSimulatedAlerts] = useState([]);
-  console.log(simulatedAlerts);
+ 
+
+  // Filtro
+  const [attackType, setAttackType] = useState("todos");
+
 
   // Traer alertas del backend local
   useEffect(() => {
     const fetchBackendAlerts = async () => {
+      let url = "http://localhost:3000/alert";
+      if (attackType === "phishing") url = "http://localhost:3000/alert/phishing";
+      if (attackType === "login") url = "http://localhost:3000/alert/login";
+      if (attackType === "ddos") url = "http://localhost:3000/alert/ddos";
+      if (attackType === "dos") url = "http://localhost:3000/alert/dos";
+      if (attackType === "fuerzabruta") url = "http://localhost:3000/alert/fuerzabruta";
+      // agregar mas variables
       try {
-        const res = await axios.get("http://localhost:3000/alert");
+        const res = await axios.get(url);
         setBackendAlerts(res.data);
       } catch (err) {
         console.error(err);
+        setBackendAlerts([]);
       }
     };
     fetchBackendAlerts();
-  }, []);
+  }, [attackType]);
 
-  // Función para agregar alertas simuladas
+  // Funcion para agregar alertas simuladas
   const handleSimulate = (newAlert) => {
     console.log("Nueva alerta recibida:", newAlert);
     setSimulatedAlerts(prev => [newAlert, ...prev]);
@@ -39,11 +51,13 @@ export default function AlertContainer() {
       </div>
 
       <h2>Alertas del Backend</h2>
-      <AlertSearch />
+      <AlertSearch attackType={attackType} setAttackType={setAttackType} />
       <AlertGraph rowData={backendAlerts} />
 
       <h2>Alertas Simuladas</h2>
-      <AlertList alerts={simulatedAlerts} />
+      <AlertList alerts={simulatedAlerts.filter(alert => 
+        attackType === "todos" ? true : alert.tipo === attackType
+      )} />
     </div>
   );
 }
