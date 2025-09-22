@@ -1,22 +1,25 @@
 .alert-graph {
-  // section general
+  // Contenedor general
   padding: 1rem;
-  background-color: #f7f8fa;
+  background: linear-gradient(90deg, #e8e8e8 60%, #f5f5f5 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 1200px; // igual que el contenedor principal
-  margin: 0 auto; // centra horizontalmente en la pantalla
+  max-width: 1200px;
+  margin: 0 auto;
 
   article.ag-theme-alpine {
-    height: 500px; // aumenta el alto de la tabla
+    height: 400px;
     width: 100%;
-    max-width: 1200px; // opcional, para limitar el ancho máximo
-    margin: 0 auto; // centra la tabla
-    border: 2px solid #4a90e2;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid #e0e0e0;
     border-radius: 8px;
-    padding: 10px;
+    padding: 6px;
+    background: linear-gradient(90deg, #e8e8e8 60%, #f5f5f5 100%);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 
     // cabecera
     .ag-header {
@@ -43,12 +46,41 @@
     .ag-cell {
       font-size: 14px;
       padding: 6px;
+      word-break: break-word;
     }
 
     // paginación
     .ag-paging-panel {
       background-color: #f0f0f0;
       padding: 6px;
+      font-size: 14px;
+    }
+  }
+}
+
+// Responsive: Mobile first
+@media (min-width: 600px) {
+  .alert-graph {
+    padding: 2rem;
+    article.ag-theme-alpine {
+      height: 500px;
+      max-width: 900px;
+      padding: 10px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}
+
+@media (min-width: 900px) {
+  .alert-graph {
+    padding: 2rem 0;
+    article.ag-theme-alpine {
+      max-width: 1200px;
+      height: 500px;
+      padding: 16px;
+      margin-left: auto;
+      margin-right: auto;
     }
   }
 }
