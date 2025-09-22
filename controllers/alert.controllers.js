@@ -1,4 +1,4 @@
-const { getAlert } = require("../models/alert.models");
+const { getAlert, getAlertPhishing } = require("../models/alert.models");
 
 const alertController = {
   getAlert: async (req, res) => {
@@ -11,4 +11,15 @@ const alertController = {
   },
 };
 
-module.exports = { alertController };
+const alertPhishingController = {
+  getAlertPhishing: async (req, res) => {
+    try {
+      const alerts = await getAlertPhishing();
+      res.status(200).json(alerts);
+    } catch (error) {
+      res.status(500).json({error: "Internal Server Error"});
+    }
+  },
+};
+
+module.exports = { alertController, alertPhishingController };
