@@ -10,6 +10,7 @@ const cors = require('cors');
 app.use(cors({
   origin: [
     "http://localhost:5173",
+    "https://proyecto-final-tripulaciones-f-s-bpzh.onrender.com",
   ],
   credentials: true
 }));
