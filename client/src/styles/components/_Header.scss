@@ -1,0 +1,80 @@
+// @use "../utils/variables.scss" as *;
+
+// Usa el color de fondo del logotripulacion (ajusta el valor si es necesario)
+$header-bg: #e8e8e8;
+
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: linear-gradient(90deg, #e8e8e8 60%, #f5f5f5 100%);
+  border-bottom: 1px solid #ececec;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+
+  &__icon img {
+    height: 48px;
+    width: auto;
+    display: block;
+  }
+
+  &__nav {
+    display: flex;
+    gap: 16px;
+  }
+
+  &__link {
+    background: #0070ad;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 18px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+
+    &:hover,
+    &:focus {
+      background: #005a8c;
+      outline: none;
+      text-decoration: underline;
+    }
+  }
+
+  &__logout {
+    background: #0070ad;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover,
+    &:focus {
+      background: #005a8c;
+      outline: none;
+    }
+  }
+}
+
+// Desktop styles
+@media (min-width: 900px) {
+  .header {
+    padding: 12px 32px;
+
+    &__icon img {
+      height: 150px;
+    }
+
+    &__logout {
+      padding: 8px 20px;
+      font-size: 1.1rem;
+    }
+  }
+}
