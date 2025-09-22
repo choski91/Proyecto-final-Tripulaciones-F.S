@@ -2,12 +2,14 @@ import { Route, Routes } from "react-router-dom";
 import SignUp from "./pages/SignUp";
 import LogIn from "./pages/Login";
 import AlertContainer from "./components/Main/AlertContainer";
+import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer"
 
 
 function App() {
   return (
     <>
+      <Header />
       <Routes>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<LogIn />} />
