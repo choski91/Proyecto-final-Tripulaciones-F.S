@@ -9,7 +9,7 @@ const AlertSearch = ({ attackType, setAttackType }) => {
         value={attackType}
         onChange={e => setAttackType(e.target.value)}
       >
-        
+        <option value="todos">Todos</option>
         <option value="ddos">DDoS</option>
         <option value="dos">DoS</option>
         <option value="fuerzabruta">Fuerza Bruta</option>
