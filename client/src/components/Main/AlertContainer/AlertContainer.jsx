@@ -11,6 +11,7 @@ export default function AlertContainer() {
   
   // Tabla 2: alertas simuladas desde API externa
   const [simulatedAlerts, setSimulatedAlerts] = useState([]);
+  console.log(simulatedAlerts);
 
   // Traer alertas del backend local
   useEffect(() => {

@@ -1,3 +1,7 @@
-@use './views/Form';
+@use './views/index';
+@use './views/App';
 
-// @use './views/SimulateAttack';
+@use './components/Form';
+@use './components/AlertGraph';
+@use './components/SimulateAttack';
+@use 'components/AlertContainer'

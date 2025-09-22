@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
+
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 // Cambia la URL si tu endpoint es diferente
@@ -38,7 +39,8 @@ function AlertGraph() {
   }, []);
 
   return (
-    <div className="ag-theme-alpine" style={{ height: 400, width: "100%" }}>
+    <section className="alert-graph">
+    < article className="ag-theme-alpine custom-table" >
       <AgGridReact
         rowData={rowData}
         columnDefs={columnDefs}
@@ -46,7 +48,8 @@ function AlertGraph() {
         paginationPageSize={10}
         paginationPageSizeSelector={[10, 20, 50, 100]}
       />
-    </div>
+    </article>  
+    </section>
   );
 }
 
