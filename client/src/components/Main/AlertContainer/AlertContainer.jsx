@@ -45,7 +45,7 @@ export default function AlertContainer() {
   };
 
   return (
-    <div className="alerts-container">
+    <section className="alerts-container">
       <div className="header">
         <SimulateAttack onSimulate={handleSimulate} />
       </div>
@@ -58,7 +58,7 @@ export default function AlertContainer() {
       <AlertList alerts={simulatedAlerts.filter(alert => 
         attackType === "todos" ? true : alert.tipo === attackType
       )} />
-    </div>
+    </section>
   );
 }
 

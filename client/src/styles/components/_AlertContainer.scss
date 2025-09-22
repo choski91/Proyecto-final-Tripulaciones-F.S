@@ -7,7 +7,10 @@
   gap: 2rem; // separación entre secciones
   padding: 2rem;
   background-color: #f9f9fb;
+  width: 100vw;
   min-height: 100vh;
+  height: 100vh;
+  box-sizing: border-box;
 
   // header con el botón o form de SimulateAttack
   .header {
@@ -78,10 +81,18 @@
 
   // responsive
   @media (max-width: 768px) {
-    padding: 1rem;
+    padding: 0.5rem;
+    min-height: 100vh;
+    height: 100vh;
+    width: 100vw;
 
     .header {
       justify-content: center;
+    }
+
+    .alert-list {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
     }
   }
 }
