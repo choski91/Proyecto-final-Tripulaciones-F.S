@@ -8,7 +8,7 @@ export default function SimulateAttack({ onSimulate }) {
   const handleClick = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.get(
+      const data = await axios.get(
         "https://desafio-4w98.onrender.com/random-alert"
       );
       // Pasamos los datos al padre para que los pinte

@@ -1,0 +1,49 @@
+@use "../utils/variables.scss" as *;
+
+
+.alert-graph {
+  // section general
+  padding: 1rem;
+  background-color: #f7f8fa;
+
+  article.ag-theme-alpine {
+    height: 400px;
+    width: 100%;
+    border: 2px solid #4a90e2;
+    border-radius: 8px;
+    padding: 10px;
+
+    // cabecera
+    .ag-header {
+      background-color: #4a90e2;
+      color: #fff;
+      font-weight: bold;
+
+      .ag-header-cell {
+        padding: 8px;
+      }
+    }
+
+    // filas pares
+    .ag-row:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    // hover
+    .ag-row-hover {
+      background-color: #dfefff !important;
+    }
+
+    // celdas
+    .ag-cell {
+      font-size: 14px;
+      padding: 6px;
+    }
+
+    // paginación
+    .ag-paging-panel {
+      background-color: #f0f0f0;
+      padding: 6px;
+    }
+  }
+}

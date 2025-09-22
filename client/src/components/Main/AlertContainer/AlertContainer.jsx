@@ -11,8 +11,11 @@ export default function AlertContainer() {
   
   // Tabla 2: alertas simuladas desde API externa
   const [simulatedAlerts, setSimulatedAlerts] = useState([]);
+ 
+
   // Filtro
   const [attackType, setAttackType] = useState("todos");
+
 
   // Traer alertas del backend local
   useEffect(() => {
