@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -7,11 +8,13 @@ const Header = () => {
         <img src="/logotripulacion.jpeg" alt="Logo" />
       </div>
       <nav className="header__nav">
-        <a href="#" className="header__link">Dashboard</a>
-        <a href="#" className="header__link">Registro</a>
-        <a href="#" className="header__link">Simulador</a>
+        <Link to="/tabla" className="header__link">Tabla</Link>
+        <Link to="/graficos" className="header__link">Gráfico</Link>
+        <Link to="/simulador" className="header__link">Simulador</Link>
       </nav>
-      <button className="header__logout">Logout</button>
+      <button className="header__logout">
+        <Link to="/login" className="header__logout">Log Out</Link>
+      </button>
     </header>
   );
 };
