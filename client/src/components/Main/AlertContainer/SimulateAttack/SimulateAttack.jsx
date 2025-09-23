@@ -12,7 +12,7 @@ export default function SimulateAttack({ onSimulate }) {
         "https://desafio-4w98.onrender.com/random-alert"
       );
       // Pasamos los datos al padre para que los pinte
-      onSimulate(data);
+      onSimulate(data.data.alerta);
     } catch (err) {
       console.error(err.response || err); // muestra el error real
     } finally {
