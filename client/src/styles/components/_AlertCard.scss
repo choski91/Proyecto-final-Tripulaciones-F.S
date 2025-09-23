@@ -1,56 +1,164 @@
 @use "../utils/variables.scss" as *;
 
+// Variables Capgemini
+$color-primary: #0070AD;      // Capgemini Blue aprox.
+$color-primary-600: #005B8C;  // Hover/darken
+$color-accent: #00A1DE;       // Sky Blue aprox.
+$color-accent-2: #2DC5F4;     // Accent claro
 
+$color-bg: #0b0f14;           // Fondo app oscuro elegante
+$color-surface: #121822;      // Tarjetas
+$color-text: #e9eef3;         // Texto principal
+$color-text-muted: #b9c2cc;   // Texto secundario
+$color-border: #223244;       // Bordes
+$color-success: #2ecc71;
+$color-error: #e74c3c;
+$shadow-1: 0 6px 18px rgba(0, 0, 0, .25);
+
+$radius-lg: 16px;
+$radius-sm: 10px;
+
+$font-stack: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+
+$bp-sm: 480px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+
+// Estilos
 .alert-card {
-  // mobile first
-  background-color: $color-accent;
+  background: $color-primary-600;
   border: 1px solid $color-border;
   border-radius: $radius-lg;
-  box-shadow: $shadow-1;
-  padding: 1rem;
-  margin: 1rem 0;
+  padding: 16px;
+  margin: 12px auto;
+  color: $color-text;
   font-family: $font-stack;
-  color: black;
-  display: flex;
-  flex-direction: column; 
+  box-shadow: $shadow-1;
+  transition: transform .2s ease, box-shadow .2s ease;
+  width: 100%;
+  max-width: 100%;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, .35);
+  }
 
   h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: black;
-    margin-bottom: 0.75rem;
+    font-size: 1.4rem;
+    margin: 0 0 10px;
+    font-weight: 700;
+    color: $color-accent;
   }
 
   p {
-    margin: 0.35rem 0;
-    font-size: 0.95rem;
-    color: black;
+    margin: 4px 0;
+    font-size: .9rem;
     line-height: 1.4;
-  }
+    color: $color-text-muted;
 
-  // a partir de pantallas medianas 
-  @media (min-width: $bp-md) {
-    // dos columnas
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 0.5rem 1rem;
-
-    h3 {
-      grid-column: 1 / -1; // el título ocupa toda la fila
-      font-size: 1.4rem;
-    }
-
-    p {
-      font-size: 1rem;
+    &:nth-child(odd) {
+      color: $color-text;
     }
   }
 
-
-  @media (min-width: $bp-lg) {
-    grid-template-columns: repeat(3, 1fr);
+  /* Colores según riesgo */
+  &.alto {
+    border-color: $color-error;
 
     h3 {
-      font-size: 1.5rem;
+      color: $color-error;
+    }
+  }
+
+  &.medio {
+    border-color: $color-accent-2;
+
+    h3 {
+      color: $color-accent-2;
+    }
+  }
+
+  &.bajo {
+    border-color: $color-success;
+
+    h3 {
+      color: $color-success;
     }
   }
 }
+
+/* Contenedor para varias alertas */
+.alert-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  /* Tablets */
+  @media (min-width: $bp-md) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  /* Desktop */
+  @media (min-width: $bp-lg) {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+
+
+// .alert-card {
+//   // mobile first
+//   background-color: $color-accent;
+//   border: 1px solid $color-border;
+//   border-radius: $radius-lg;
+//   box-shadow: $shadow-1;
+//   padding: 1rem;
+//   margin: 1rem 0;
+//   font-family: $font-stack;
+//   color: black;
+//   display: flex;
+//   flex-direction: column; 
+
+//   h3 {
+//     font-size: 1.25rem;
+//     font-weight: 600;
+//     color: black;
+//     margin-bottom: 0.75rem;
+//   }
+
+//   p {
+//     margin: 0.35rem 0;
+//     font-size: 0.95rem;
+//     color: black;
+//     line-height: 1.4;
+//   }
+
+//   // a partir de pantallas medianas 
+//   @media (min-width: $bp-md) {
+//     // dos columnas
+//     display: grid;
+//     grid-template-columns: repeat(2, 1fr);
+//     grid-gap: 0.5rem 1rem;
+
+//     h3 {
+//       grid-column: 1 / -1; // el título ocupa toda la fila
+//       font-size: 1.4rem;
+//     }
+
+//     p {
+//       font-size: 1rem;
+//     }
+//   }
+
+
+//   @media (min-width: $bp-lg) {
+//     grid-template-columns: repeat(3, 1fr);
+
+//     h3 {
+//       font-size: 1.5rem;
+//     }
+//   }
+// }

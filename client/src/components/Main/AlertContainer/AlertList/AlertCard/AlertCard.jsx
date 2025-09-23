@@ -17,7 +17,7 @@ export default function AlertCard({ alert }) {
       <p>{alert.score_final || "Sin dato"}</p>
       <p>{alert.target || "Sin dato"}</p>
       <p>{alert.vpn || "Sin dato"}</p>
-
+    
     </div>
   );
 }
