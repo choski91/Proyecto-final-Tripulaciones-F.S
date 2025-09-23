@@ -1,0 +1,56 @@
+@use "../utils/variables.scss" as *;
+
+
+.alert-card {
+  // mobile first
+  background-color: $color-accent;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-1;
+  padding: 1rem;
+  margin: 1rem 0;
+  font-family: $font-stack;
+  color: black;
+  display: flex;
+  flex-direction: column; 
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: black;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    margin: 0.35rem 0;
+    font-size: 0.95rem;
+    color: black;
+    line-height: 1.4;
+  }
+
+  // a partir de pantallas medianas 
+  @media (min-width: $bp-md) {
+    // dos columnas
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 0.5rem 1rem;
+
+    h3 {
+      grid-column: 1 / -1; // el título ocupa toda la fila
+      font-size: 1.4rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+
+
+  @media (min-width: $bp-lg) {
+    grid-template-columns: repeat(3, 1fr);
+
+    h3 {
+      font-size: 1.5rem;
+    }
+  }
+}
