@@ -6,12 +6,14 @@ export default function TopIPsChart() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
+
     const apiUrl = window._env_?.VITE_BACKEND_PYTHON;
     if (!apiUrl) {
       console.error("VITE_BACKEND_PYTHON no está definido en window._env_");
       return;
     }
     fetch(`${apiUrl}/top-ips`)
+
       .then((res) => res.json())
       .then((json) => setData(json))
       .catch((err) => console.error("Error fetching top IPs:", err));
