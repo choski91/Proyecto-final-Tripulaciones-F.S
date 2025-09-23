@@ -2,7 +2,7 @@ const pool = require("../config/sqlConfig");
 const queries = require("../utils/queries");
 
 const getLoginAlert = async () => {
-  const result = await pool.query(queries.getAlert);
+  const result = await pool.query(queries.getAlertLogin);
   return result.rows;
 };
 
