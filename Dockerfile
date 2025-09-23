@@ -22,4 +22,4 @@ ARG DEFAULT_VITE_BACKEND_PYTHON=https://mi-backend-por-defecto.com
 ENV VITE_BACKEND_PYTHON=${VITE_BACKEND_PYTHON:-$DEFAULT_VITE_BACKEND_PYTHON}
 
 # Reemplazar placeholder y arrancar Express
-CMD ["/bin/sh", "-c", "sed -i 's|__VITE_BACKEND_PYTHON__|'"$VITE_BACKEND_PYTHON"'|g' ./client/dist/env.js && node app.js"]
+CMD sed -i 's|__VITE_BACKEND_PYTHON__|'"$VITE_BACKEND_PYTHON"'|g' ./client/dist/env.js && node app.js
