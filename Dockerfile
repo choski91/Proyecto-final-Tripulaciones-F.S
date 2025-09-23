@@ -2,19 +2,24 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-# Copia todo el proyecto
-COPY . .
-
-# Instala dependencias backend
+# Copiar backend
+COPY package*.json ./
 RUN npm install
 
-# Instala frontend y genera build
+# Copiar todo el proyecto
+COPY . .
+
+# Build del frontend
 WORKDIR /app/client
 RUN npm install && npm run build
 
-# Vuelve al root y expone puerto
+# Volver al backend
 WORKDIR /app
 EXPOSE 8080
 
-# Lanza servidor Express
-CMD ["node", "app.js"]
+# Valor por defecto si no se define en Render
+ARG DEFAULT_VITE_BACKEND_PYTHON=https://mi-backend-por-defecto.com
+ENV VITE_BACKEND_PYTHON=${VITE_BACKEND_PYTHON:-$DEFAULT_VITE_BACKEND_PYTHON}
+
+# Reemplazar placeholder y arrancar Express
+CMD ["/bin/sh", "-c", "sed -i 's|__VITE_BACKEND_PYTHON__|'"$VITE_BACKEND_PYTHON"'|g' ./client/dist/env.js && node app.js"]

@@ -4,7 +4,12 @@ function KPICards() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    fetch("https://garph-cpag.onrender.com/kpis")
+    const apiUrl = window._env_?.VITE_BACKEND_PYTHON;
+    if (!apiUrl) {
+      console.error("VITE_BACKEND_PYTHON no está definido en window._env_");
+      return;
+    }
+    fetch(`${apiUrl}/kpis`)
       .then((res) => res.json())
       .then((d) => setData(d))
       .catch((err) => console.error("Error fetching KPIs:", err));
@@ -17,7 +22,7 @@ function KPICards() {
     { title: "Ataques últimos 24h", value: data.ultimas_24h },
     { title: "Media severidad", value: data.media_riesgo },
     { title: "Usuarios afectados", value: data.clientes_afectados },
-    { title: "Tiempo medio resolución", value: data.tiempo_resolucion }, // 👈 añadido
+    { title: "Tiempo medio resolución", value: data.tiempo_resolucion },
   ];
 
   return (

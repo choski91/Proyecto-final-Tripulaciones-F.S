@@ -29,11 +29,17 @@ export default function AttackLineChart() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const apiUrl = window._env_?.VITE_BACKEND_PYTHON;
+        if (!apiUrl) {
+          console.error("VITE_BACKEND_PYTHON no está definido en window._env_");
+          return;
+        }
         let response;
         if (range === "7d") {
-          response = await fetch(`${import.meta.env.VITE_BACKEND_PYTHON}/ataques-ultimos-7-dias`);
+
+          response = await fetch(`${apiUrl}/ataques-ultimos-7-dias`);
         } else {
-          response = await fetch(`${import.meta.env.VITE_BACKEND_PYTHON}/ataques-ultimas-24h`);
+          response = await fetch(`${apiUrl}/ataques-ultimas-24h`);
         }
 
         const result = await response.json();
