@@ -12,13 +12,29 @@ html, body {
   box-sizing: border-box; // Asegura que el padding y border se incluyan en el ancho y alto de los elementos
 }
 
-*, *::before, *::after {
-  box-sizing: inherit;
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 #root {
-  min-height: 100vh;
-  
+  flex: 1;
   display: flex;
   flex-direction: column;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer {
+  margin-top: auto; // lo empuja abajo
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
 }
