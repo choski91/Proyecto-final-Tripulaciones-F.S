@@ -1,3 +1,5 @@
+require('dotenv').config(); // <-- Agrega esto al inicio
+
 const express = require("express"); // Importamos el paquete express
 const path = require("path");
 const app = express(); // Inciializar servidor con express

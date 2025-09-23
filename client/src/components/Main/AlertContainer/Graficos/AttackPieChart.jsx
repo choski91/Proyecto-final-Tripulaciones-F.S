@@ -8,7 +8,7 @@ export default function AttackPieChart() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    fetch("https://garph-cpag.onrender.com/ataques-por-tipo")
+    fetch(`${import.meta.env.VITE_BACKEND_PYTHON}/ataques-por-tipo`)
       .then((res) => res.json())
       .then((json) => {
         setData({

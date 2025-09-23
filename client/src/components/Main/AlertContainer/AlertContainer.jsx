@@ -6,6 +6,8 @@ import AlertSearch from "./AlertSearch";
 import SimulateAttack from "./SimulateAttack";
 import Graficos from "./Graficos";
 
+const API_BASE = import.meta.env.VITE_BACKEND_URL;
+
 export default function AlertContainer() {
   // Tabla 1: alertas del backend local
   const [backendAlerts, setBackendAlerts] = useState([]);
@@ -21,12 +23,12 @@ export default function AlertContainer() {
   // Traer alertas del backend local
   useEffect(() => {
     const fetchBackendAlerts = async () => {
-      let url = "http://localhost:3000/alert";
-      if (attackType === "phishing") url = "http://localhost:3000/alert/phishing";
-      if (attackType === "login") url = "http://localhost:3000/alert/login";
-      if (attackType === "ddos") url = "http://localhost:3000/alert/ddos";
-      if (attackType === "dos") url = "http://localhost:3000/alert/dos";
-      if (attackType === "fuerzabruta") url = "http://localhost:3000/alert/fuerzabruta";
+      let url = `${import.meta.env.VITE_BACKEND_URL}/alert`;
+      if (attackType === "phishing") url = `${import.meta.env.VITE_BACKEND_URL}/alert/phishing`;
+      if (attackType === "login") url = `${import.meta.env.VITE_BACKEND_URL}/alert/login`;
+      if (attackType === "ddos") url = `${import.meta.env.VITE_BACKEND_URL}/alert/ddos`;
+      if (attackType === "dos") url = `${import.meta.env.VITE_BACKEND_URL}/alert/dos`;
+      if (attackType === "fuerzabruta") url = `${import.meta.env.VITE_BACKEND_URL}/alert/fuerzabruta`;
       try {
         const res = await axios.get(url);
         setBackendAlerts(res.data); // <-- esto debe cambiar cada vez

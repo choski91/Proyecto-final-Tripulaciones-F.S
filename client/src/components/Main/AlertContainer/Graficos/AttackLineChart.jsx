@@ -31,9 +31,9 @@ export default function AttackLineChart() {
       try {
         let response;
         if (range === "7d") {
-          response = await fetch("https://garph-cpag.onrender.com/ataques-ultimos-7-dias");
+          response = await fetch(`${import.meta.env.VITE_BACKEND_PYTHON}/ataques-ultimos-7-dias`);
         } else {
-          response = await fetch("https://garph-cpag.onrender.com/ataques-ultimas-24h");
+          response = await fetch(`${import.meta.env.VITE_BACKEND_PYTHON}/ataques-ultimas-24h`);
         }
 
         const result = await response.json();

@@ -1,7 +1,9 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
-// https://vite.dev/config/
 export default defineConfig({
+  envDir: '..',        // ruta al directorio que contiene el .env (desde vite.config)
   plugins: [react()],
-})
+  // opcional: ampliar prefijos permitidos
+  // envPrefix: ['VITE_', 'APP_'],
+});

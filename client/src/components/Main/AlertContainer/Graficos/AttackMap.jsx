@@ -9,7 +9,7 @@ const AttackMap = () => {
 
   // Llamada al backend
   useEffect(() => {
-    fetch("https://garph-cpag.onrender.com/ataques-por-pais")
+    fetch(`${import.meta.env.VITE_BACKEND_PYTHON}/ataques-por-pais`)
       .then((res) => res.json())
       .then((data) => setData(data))
       .catch((err) => console.error("Error fetching ataques por pais:", err));
