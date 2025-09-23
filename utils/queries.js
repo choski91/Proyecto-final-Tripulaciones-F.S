@@ -6,7 +6,7 @@ const queries = {
             VALUES ($1,$2,$3);`,
 
     //Alert
-    getAlert: `SELECT * FROM alertas_login_sospechoso;`,
+    getAlertLogin: `SELECT * FROM alertas_login_sospechoso;`,
 
     //PHISHING
     getAlertPhishing: `SELECT * FROM alertas_phishing;`,

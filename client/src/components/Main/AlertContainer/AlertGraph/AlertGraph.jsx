@@ -1,23 +1,28 @@
 import React from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import { ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
+import { ModuleRegistry, AllCommunityModule } from "ag-grid-community";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 const columnDefs = [
   { headerName: "ID", field: "id", sortable: true, filter: true },
-  { headerName: "Tipo Alerta", field: "tipo_alerta", sortable: true, filter: true },
+  {
+    headerName: "Tipo Alerta",
+    field: "tipo_alerta",
+    sortable: true,
+    filter: true,
+  },
   {
     headerName: "Fecha",
     field: "fecha",
     sortable: true,
     filter: true,
-    valueFormatter: params => {
+    valueFormatter: (params) => {
       if (!params.value) return "";
       const date = new Date(params.value);
       return date.toLocaleDateString();
-    }
+    },
   },
   { headerName: "Hora", field: "hora", sortable: true, filter: true },
   { headerName: "IP", field: "ip", sortable: true, filter: true },
@@ -32,25 +37,30 @@ const columnDefs = [
   { headerName: "Riesgo", field: "riesgo", sortable: true, filter: true },
 ];
 
-
-function AlertGraph({rowData}) {
-const defaultColDef = { resizable: true, sortable: true, filter: true, flex: 1, minWidth: 120 };
+function AlertGraph({ rowData }) {
+  const defaultColDef = {
+    resizable: true,
+    sortable: true,
+    filter: true,
+    flex: 1,
+    minWidth: 120,
+  };
 
   return (
     <section className="alert-graph">
-  <article
-  className="ag-theme-alpine custom-table"
-  style={{ width: '100%', height: '70vh' }}   // <- ancho completo + alto útil
->
-  <AgGridReact
-    rowData={rowData}
-    columnDefs={columnDefs}
-    defaultColDef={{ resizable: true, sortable: true, filter: true, flex: 1, minWidth: 120 }}
-    pagination
-    paginationPageSize={10}
-    paginationPageSizeSelector={[10, 20, 50, 100]}
-  />
-</article>
+      <article
+        className="ag-theme-alpine custom-table"
+        style={{ width: "100%", height: "70vh" }} // <- ancho completo + alto útil
+      >
+        <AgGridReact
+          rowData={rowData}
+          columnDefs={columnDefs}
+          defaultColDef={defaultColDef}
+          pagination
+          paginationPageSize={10}
+          paginationPageSizeSelector={[10, 20, 50, 100]}
+        />
+      </article>
     </section>
   );
 }
