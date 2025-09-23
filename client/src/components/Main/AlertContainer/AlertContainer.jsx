@@ -59,7 +59,7 @@ export default function AlertContainer() {
       <AlertSearch attackType={attackType} setAttackType={setAttackType} />
       <AlertGraph rowData={backendAlerts} attackType={attackType} />
 
-      <h2>Alertas Simuladas</h2>
+      {/* <h2>Alertas Simuladas</h2>
       <div className="header">
         <SimulateAttack onSimulate={handleSimulate} />
       </div>
@@ -67,9 +67,9 @@ export default function AlertContainer() {
         attackType === "todos" ? true : alert.tipo === attackType
       )} />
       <article className="graficos">
-        <Graficos />
+        <Graficos /> */}
 
-      </article>
+      {/* </article> */}
     </section>
   );
 }

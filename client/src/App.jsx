@@ -6,10 +6,9 @@ import LogIn from "./pages/Login";
 import AlertContainer from "./components/Main/AlertContainer";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import AlertGraph from "./components/Main/AlertContainer/AlertGraph";
-import SimulateAttack from "./components/Main/AlertContainer/SimulateAttack";
 import Graficos from "./components/Main/AlertContainer/Graficos";
 import "normalize.css";
+import AlertList from "./components/Main/AlertContainer/AlertList";
 
 function App() {
   const location = useLocation();
@@ -29,8 +28,8 @@ function App() {
         <Route path="/login" element={<LogIn />} />
         <Route path="/logout" element={<LogIn />} />
         {/* <Route path="/home" element={<AlertContainer />} /> */}
-        <Route path="/tabla" element={<AlertGraph />} />
-        <Route path="/simulador" element={<SimulateAttack />} />
+        <Route path="/tabla" element={<AlertContainer />} />
+        <Route path="/simulador" element={<AlertList />} />
         <Route path="/graficos" element={<Graficos />} />
       </Routes>
       {!hideHeader && <Footer />}
