@@ -9,7 +9,12 @@ export default function AttackHeatmap() {
   const [dataAPI, setDataAPI] = useState([]);
 
   useEffect(() => {
-    fetch("https://garph-cpag.onrender.com/ataques-por-hora")
+    const apiUrl = window._env_?.VITE_BACKEND_PYTHON;
+    if (!apiUrl) {
+      console.error("VITE_BACKEND_PYTHON no está definido en window._env_");
+      return;
+    }
+    fetch(`${apiUrl}/ataques-por-hora`)
       .then((res) => res.json())
       .then((json) => setDataAPI(json))
       .catch((err) => console.error("Error cargando ataques por hora:", err));

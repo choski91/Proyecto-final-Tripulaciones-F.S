@@ -8,7 +8,12 @@ export default function AttackPieChart() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    fetch("https://garph-cpag.onrender.com/ataques-por-tipo")
+    const apiUrl = window._env_?.VITE_BACKEND_PYTHON;
+    if (!apiUrl) {
+      console.error("VITE_BACKEND_PYTHON no está definido en window._env_");
+      return;
+    }
+    fetch(`${apiUrl}/ataques-por-tipo`)
       .then((res) => res.json())
       .then((json) => {
         setData({
