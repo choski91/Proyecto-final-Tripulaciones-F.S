@@ -16,4 +16,26 @@ const getAllAlerts = async () => {
   return result.rows;
 };
 
-module.exports = { getLoginAlert, getAlertPhishing, getAllAlerts };
+const getAlertDdos = async () => {
+  const result = await pool.query(queries.getAlertDdos);
+  return result.rows;
+};
+
+const getAlertDos = async () => {
+  const result = await pool.query(queries.getAlertDos);
+  return result.rows;
+};
+
+const getAlertFuerzaBruta = async () => {
+  const result = await pool.query(queries.getAlertFuerzaBruta);
+  return result.rows;
+};
+
+module.exports = {
+  getAlert,
+  getAlertPhishing,
+  getAlertDdos,
+  getAlertDos,
+  getAlertFuerzaBruta,
+  getAllAlerts
+};
