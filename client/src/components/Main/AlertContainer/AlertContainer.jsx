@@ -4,6 +4,7 @@ import AlertGraph from "./AlertGraph";
 import AlertList from "./AlertList";
 import AlertSearch from "./AlertSearch";
 import SimulateAttack from "./SimulateAttack";
+import Graficos from "./Graficos";
 
 export default function AlertContainer() {
   // Tabla 1: alertas del backend local
@@ -44,18 +45,23 @@ export default function AlertContainer() {
 
   return (
     <section className="alerts-container">
-      <div className="header">
-        <SimulateAttack onSimulate={handleSimulate} />
-      </div>
+      
 
       <h2>Alertas del Backend</h2>
       <AlertSearch attackType={attackType} setAttackType={setAttackType} />
       <AlertGraph rowData={backendAlerts} attackType={attackType} />
 
       <h2>Alertas Simuladas</h2>
+      <div className="header">
+        <SimulateAttack onSimulate={handleSimulate} />
+      </div>
       <AlertList alerts={simulatedAlerts.filter(alert => 
         attackType === "todos" ? true : alert.tipo === attackType
       )} />
+      <article className="graficos">
+        <Graficos />
+
+      </article>
     </section>
   );
 }
