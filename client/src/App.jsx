@@ -23,7 +23,7 @@ function App() {
       <Routes>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<LogIn />} />
-        <Route path="/alerts" element={<AlertContainer />} />
+        <Route path="/home" element={<AlertContainer />} />
       </Routes>
       {!hideHeader && <Footer />}
     </>
