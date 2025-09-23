@@ -1,38 +1,36 @@
+import { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import SignUp from "./pages/SignUp";
 import LogIn from "./pages/Login";
 import AlertContainer from "./components/Main/AlertContainer";
 import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer"
-
+import Footer from "./components/Footer/Footer";
 
 function App() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const hideHeader =
+    location.pathname === "/login" ||
+    location.pathname === "/signup" ||
+    location.pathname === "/forgot" ||
+    location.pathname === "/reset-password";
+
   return (
     <>
-      <Header />
+      {!hideHeader && <Header />}
       <Routes>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/alerts" element={<AlertContainer />} />
       </Routes>
-      <Footer />
+      {!hideHeader && <Footer />}
     </>
   );
 }
 
 export default App;
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import { useState, useEffect } from "react";
 // import { useLocation } from "react-router-dom";

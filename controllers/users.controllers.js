@@ -48,7 +48,7 @@ async function login(req, res) {
     const user = result.rows[0];
     if (!user) return res.status(401).json({ message: "Usuario no encontrado" });
 
-    const ok = await bcrypt.compare(password, user.hashed_password); // 👈 usa hashed_password
+    const ok = await bcrypt.compare(password, user.password); // 👈 usa hashed_password
     if (!ok) return res.status(401).json({ message: "Credenciales inválidas" });
 
     const accessToken = jwt.sign(

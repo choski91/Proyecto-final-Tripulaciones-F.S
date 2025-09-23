@@ -1,86 +1,133 @@
+@import "../utils/variables";
+
+// Contenedor de la sección
 .alert-graph {
-  // Contenedor general
-  padding: 1rem;
-  background: linear-gradient(90deg, #e8e8e8 60%, #f5f5f5 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  background: $color-bg;
+  color: $color-text;
+   width: 100%;
+  max-width: 100%;   
+  border-radius: $radius-lg;
+}
+
+// Wrapper con scroll horizontal en móviles
+.ag-theme-alpine.custom-table {
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+  overflow: auto;        // permite scroll horizontal en pantallas pequeñas
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-1;
+  background: $color-surface;
 
-  article.ag-theme-alpine {
-    height: 400px;
-    width: 100%;
-    max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 6px;
-    background: linear-gradient(90deg, #e8e8e8 60%, #f5f5f5 100%);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  // ===== AG Grid CSS variables (Alpine) =====
+  --ag-font-family: #{$font-stack};
+  --ag-foreground-color: #{$color-text};
+  --ag-background-color: #{$color-surface};
+  --ag-secondary-foreground-color: #{$color-text-muted};
+  --ag-header-background-color: #{$color-primary};
+  --ag-header-foreground-color: #fff;
+  --ag-border-color: #{$color-border};
+  --ag-odd-row-background-color: #{mix($color-surface, #000, 90%)};
+  --ag-row-hover-color: #{rgba(0, 161, 222, .08)};
+  --ag-selected-row-background-color: #{rgba(0, 112, 173, .18)};
+  --ag-checkbox-unchecked-color: #{$color-text-muted};
+  --ag-input-focus-border-color: #{$color-accent};
+  --ag-row-border-style: solid;
 
-    // cabecera
-    .ag-header {
-      background-color: #4a90e2;
-      color: #fff;
-      font-weight: bold;
+  // Densidad compacta por defecto (mobile-first)
+  --ag-grid-size: 5px;     // padding interno
+  --ag-row-height: 40px;
+  --ag-header-height: 44px;
 
-      .ag-header-cell {
-        padding: 8px;
+  // Header sticky (cuando el contenedor hace scroll)
+  .ag-header {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+  }
+
+  // Celdas y columnas
+  .ag-cell, .ag-header-cell {
+    font-size: .9rem;
+    line-height: 1.3;
+  }
+
+  // Zebra + bordes más sutiles
+  .ag-row-odd {
+    background: var(--ag-odd-row-background-color);
+  }
+
+  // Filtros/inputs
+  .ag-input-field-input,
+  .ag-filter {
+    background: $color-surface;
+    color: $color-text;
+    border-color: $color-border;
+  }
+
+  // Paginación
+  .ag-paging-panel,
+  .ag-status-bar {
+    background: $color-surface;
+    color: $color-text-muted;
+    border-top: 1px solid $color-border;
+
+    .ag-paging-button {
+      border-radius: $radius-sm;
+      background: transparent;
+      color: $color-text;
+
+      &:hover {
+        background: rgba(255,255,255,.06);
+      }
+
+      &.ag-disabled {
+        opacity: .5;
       }
     }
+  }
 
-    // filas pares
-    .ag-row:nth-child(even) {
-      background-color: #f9f9f9;
-    }
+  // Scrollbars (WebKit)
+  &::-webkit-scrollbar {
+    height: 10px; // horizontal
+    width: 10px;  // vertical (por si acaso)
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $color-border;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background: darken($color-surface, 3%);
+  }
+}
 
-    // hover
-    .ag-row-hover {
-      background-color: #dfefff !important;
-    }
+// ===== Breakpoints (mobile-first) =====
+@media (min-width: $bp-sm) {
+  .ag-theme-alpine.custom-table {
+    --ag-row-height: 44px;
+    --ag-header-height: 48px;
+  }
+}
 
-    // celdas
-    .ag-cell {
-      font-size: 14px;
-      padding: 6px;
-      word-break: break-word;
-    }
+@media (min-width: $bp-md) {
+  .ag-theme-alpine.custom-table {
+    --ag-grid-size: 6px;
+    --ag-row-height: 48px;
+    --ag-header-height: 52px;
 
-    // paginación
-    .ag-paging-panel {
-      background-color: #f0f0f0;
-      padding: 6px;
-      font-size: 14px;
+    .ag-cell, .ag-header-cell {
+      font-size: .95rem;
     }
   }
 }
 
-// Responsive: Mobile first
-@media (min-width: 600px) {
-  .alert-graph {
-    padding: 2rem;
-    article.ag-theme-alpine {
-      height: 500px;
-      max-width: 900px;
-      padding: 10px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-  }
-}
+@media (min-width: $bp-lg) {
+  .ag-theme-alpine.custom-table {
+    --ag-grid-size: 7px;
+    --ag-row-height: 52px;
+    --ag-header-height: 56px;
 
-@media (min-width: 900px) {
-  .alert-graph {
-    padding: 2rem 0;
-    article.ag-theme-alpine {
-      max-width: 1200px;
-      height: 500px;
-      padding: 16px;
-      margin-left: auto;
-      margin-right: auto;
+    .ag-cell, .ag-header-cell {
+      font-size: 1rem;
     }
   }
 }
