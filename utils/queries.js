@@ -127,8 +127,8 @@ FROM (
   FROM public.alertas_phishing
 ) all_alerts
 ORDER BY fecha DESC NULLS LAST, id ASC;
-`
-}
+`,
+
   // USERS
   getUserById: `SELECT * FROM users WHERE id=$1;`,
   getUserByEmail: `SELECT * FROM users WHERE email=$1;`,
