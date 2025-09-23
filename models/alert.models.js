@@ -32,10 +32,10 @@ const getAlertFuerzaBruta = async () => {
 };
 
 module.exports = {
-  getAlert,
   getAlertPhishing,
   getAlertDdos,
   getAlertDos,
   getAlertFuerzaBruta,
-  getAllAlerts
+  getAllAlerts,
+  getLoginAlert
 };

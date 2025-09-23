@@ -1,5 +1,5 @@
 const {
-  getAlert,
+  getLoginAlert,
   getAlertPhishing,
   getAlertDdos,
   getAlertDos,
@@ -73,4 +73,4 @@ const alertAllController = {
     }
   },
 };
-module.exports = { alertController, alertPhishingController, alertDosController, alertDdosController, alertFuerzaBrutaController, alertAllController };
+module.exports = { alertPhishingController, alertDosController, alertDdosController, alertFuerzaBrutaController, alertAllController , alertLoginController};
