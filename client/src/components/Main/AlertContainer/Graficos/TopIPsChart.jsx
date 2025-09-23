@@ -6,7 +6,7 @@ export default function TopIPsChart() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("https://garph-cpag.onrender.com/top-ips")
+    fetch(`${import.meta.env.VITE_BACKEND_PYTHON}/top-ips`)
       .then((res) => res.json())
       .then((json) => setData(json));
   }, []);
