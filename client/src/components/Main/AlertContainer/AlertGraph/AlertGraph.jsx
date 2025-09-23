@@ -1,9 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { ModuleRegistry, AllCommunityModule } from "ag-grid-community";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
+// Altura estimada por fila en px (ajusta según tu diseño)
+const ROW_HEIGHT = 40;
+const HEADER_HEIGHT = 50;
+const PADDING = 50;
 
 const columnDefs = [
   { headerName: "ID", field: "id", sortable: true, filter: true },
@@ -38,6 +42,7 @@ const columnDefs = [
 ];
 
 function AlertGraph({ rowData }) {
+  const [pageSize, setPageSize] = useState(10);
   const defaultColDef = {
     resizable: true,
     sortable: true,
@@ -46,12 +51,15 @@ function AlertGraph({ rowData }) {
     minWidth: 120,
   };
 
+    // Calculamos altura dinámica
+  const dynamicHeight = HEADER_HEIGHT + PADDING + pageSize * ROW_HEIGHT;
+
   return (
     <section className="alert-graph">
       <article
-        className="ag-theme-alpine custom-table"
-        style={{ width: "100%", height: "70vh" }} // <- ancho completo + alto útil
-      >
+  className="ag-theme-alpine custom-table"
+  style={{ width: "100%", height: `${dynamicHeight}px` }}
+>
         <AgGridReact
           rowData={rowData}
           columnDefs={columnDefs}
@@ -59,6 +67,9 @@ function AlertGraph({ rowData }) {
           pagination
           paginationPageSize={10}
           paginationPageSizeSelector={[10, 20, 50, 100]}
+          onPaginationChanged={(params) => {
+            setPageSize(params.api.paginationGetPageSize());
+          }}
         />
       </article>
     </section>
