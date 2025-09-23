@@ -14,7 +14,7 @@ export default function SimulateAttack({ onSimulate }) {
       // Pasamos los datos al padre para que los pinte
       onSimulate(data);
     } catch (err) {
-      console.error(err);
+      console.error(err.response || err); // muestra el error real
     } finally {
       setLoading(false);
     }
