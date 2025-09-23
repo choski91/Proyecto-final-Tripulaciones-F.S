@@ -9,7 +9,7 @@ export default function AttackHeatmap() {
   const [dataAPI, setDataAPI] = useState([]);
 
   useEffect(() => {
-    fetch("https://garph-cpag.onrender.com/ataques-por-hora")
+    fetch(`${import.meta.env.VITE_BACKEND_PYTHON}/ataques-por-hora`)
       .then((res) => res.json())
       .then((json) => setDataAPI(json))
       .catch((err) => console.error("Error cargando ataques por hora:", err));
