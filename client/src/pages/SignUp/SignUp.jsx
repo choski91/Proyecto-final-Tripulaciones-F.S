@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const API = import.meta.env.VITE_API_URL || "http://localhost:3000";
+const apiUrlRender = (window._env_?.VITE_BACKEND_URL) || "http://localhost:3000";
 
 export default function SignUp() {
   const [form, setForm] = useState({ name: "", email: "", password: "", confirm: "" });
@@ -20,7 +20,7 @@ export default function SignUp() {
     setLoading(true);
     try {
       const { data } = await axios.post(
-        `${API}/users/register`,
+        `${apiUrlRender}/users/register`,
         {
           name: form.name.trim(),
           email: form.email.trim().toLowerCase(),

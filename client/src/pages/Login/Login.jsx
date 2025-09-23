@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const API = import.meta.env.VITE_API_URL || "http://localhost:3000";
+const apiUrlRender = window._env_?.VITE_BACKEND_URL || "http://localhost:3000";
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -18,7 +18,7 @@ export default function Login() {
     setLoading(true);
     try {
       const { data } = await axios.post(
-        `${API}/users/login`,
+        `${apiUrlRender}/users/login`,
         {
           email: form.email.trim().toLowerCase(),
           password: form.password,
