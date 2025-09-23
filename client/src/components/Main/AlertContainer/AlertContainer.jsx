@@ -23,15 +23,21 @@ export default function AlertContainer() {
   // Traer alertas del backend local
   useEffect(() => {
     const fetchBackendAlerts = async () => {
-      let url = `${import.meta.env.VITE_BACKEND_URL}/alert`;
-      if (attackType === "phishing") url = `${import.meta.env.VITE_BACKEND_URL}/alert/phishing`;
-      if (attackType === "login") url = `${import.meta.env.VITE_BACKEND_URL}/alert/login`;
-      if (attackType === "ddos") url = `${import.meta.env.VITE_BACKEND_URL}/alert/ddos`;
-      if (attackType === "dos") url = `${import.meta.env.VITE_BACKEND_URL}/alert/dos`;
-      if (attackType === "fuerzabruta") url = `${import.meta.env.VITE_BACKEND_URL}/alert/fuerzabruta`;
+      const apiUrlRender = window._env_?.VITE_BACKEND_URL;
+      if (!apiUrlRender) {
+        console.error("VITE_BACKEND_URL no está definido en window._env_");
+        return;
+      }
+      let url = `${apiUrlRender}/alert`;
+      if (attackType === "phishing") url = `${apiUrlRender}/alert/phishing`;
+      if (attackType === "login") url = `${apiUrlRender}/alert/login`;
+      if (attackType === "ddos") url = `${apiUrlRender}/alert/ddos`;
+      if (attackType === "dos") url = `${apiUrlRender}/alert/dos`;
+      if (attackType === "fuerzabruta") url = `${apiUrlRender}/alert/fuerzabruta`;
       try {
-        const res = await axios.get(url);
-        setBackendAlerts(res.data); // <-- esto debe cambiar cada vez
+        const response = await fetch(url);
+        const data = await response.json();
+        setBackendAlerts(data);
       } catch (err) {
         console.error(err);
       }
