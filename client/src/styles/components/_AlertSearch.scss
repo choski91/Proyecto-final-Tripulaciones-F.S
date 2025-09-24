@@ -36,6 +36,30 @@
     }
   }
 
+  .export-csv-btn {
+    padding: 0.45rem 1.2rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(90deg, #0070ad 60%, #00c6fb 100%);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,112,173,0.08);
+    transition: 
+      background 0.18s cubic-bezier(0.4,0,0.2,1),
+      transform 0.15s cubic-bezier(0.4,0,0.2,1),
+      box-shadow 0.18s;
+
+    &:hover,
+    &:focus {
+      background: linear-gradient(90deg, #005a8c 60%, #00a6d6 100%);
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 4px 16px rgba(0,112,173,0.16);
+      outline: none;
+    }
+  }
+
   // móvil: que se apilen
   @media (max-width: 600px) {
     flex-direction: column;
@@ -43,6 +67,10 @@
 
     select {
       width: 100%;
+    }
+    .export-csv-btn {
+      width: 100%;
+      margin-top: 0.5rem;
     }
   }
 }
