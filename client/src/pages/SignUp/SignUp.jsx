@@ -22,7 +22,7 @@ export default function SignUp() {
       const { data } = await axios.post(
         `${apiUrlRender}/users/register`,
         {
-          name: form.name.trim(),
+          nombre: form.name.trim(),
           cif: form.cif.trim(),
           email: form.email.trim().toLowerCase(),
           password: form.password,
