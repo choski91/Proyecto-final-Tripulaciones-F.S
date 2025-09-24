@@ -11,35 +11,29 @@ const API_BASE = import.meta.env.VITE_BACKEND_URL;
 export default function AlertContainer() {
   // Tabla 1: alertas del backend local
   const [backendAlerts, setBackendAlerts] = useState([]);
-  
   // Tabla 2: alertas simuladas desde API externa
   const [simulatedAlerts, setSimulatedAlerts] = useState([]);
- 
-
   // Filtro
   const [attackType, setAttackType] = useState("todos");
-
 
   // Traer alertas del backend local
   useEffect(() => {
     const fetchBackendAlerts = async () => {
-      const apiUrlRender = window._env_?.VITE_BACKEND_URL;
-      if (!apiUrlRender) {
-        console.error("VITE_BACKEND_URL no está definido en window._env_");
+      if (!API_BASE) {
+        console.error("VITE_BACKEND_URL no está definido");
         return;
       }
-      let url = `${apiUrlRender}/alert`;
-      if (attackType === "phishing") url = `${apiUrlRender}/alert/phishing`;
-      if (attackType === "login") url = `${apiUrlRender}/alert/login`;
-      if (attackType === "ddos") url = `${apiUrlRender}/alert/ddos`;
-      if (attackType === "dos") url = `${apiUrlRender}/alert/dos`;
-      if (attackType === "fuerzabruta") url = `${apiUrlRender}/alert/fuerzabruta`;
+      let url = `${API_BASE}/alert`;
+      if (attackType === "phishing") url = `${API_BASE}/alert/phishing`;
+      if (attackType === "login") url = `${API_BASE}/alert/login`;
+      if (attackType === "ddos") url = `${API_BASE}/alert/ddos`;
+      if (attackType === "dos") url = `${API_BASE}/alert/dos`;
+      if (attackType === "fuerzabruta") url = `${API_BASE}/alert/fuerzabruta`;
       try {
-        const response = await fetch(url);
-        const data = await response.json();
-        setBackendAlerts(data);
+        const res = await axios.get(url);
+        setBackendAlerts(res.data);
       } catch (err) {
-        console.error(err);
+        setBackendAlerts([]);
       }
     };
     fetchBackendAlerts();
@@ -53,23 +47,13 @@ export default function AlertContainer() {
 
   return (
     <section className="alerts-container">
-      
-
       <h2>Alertas del Backend</h2>
-      <AlertSearch attackType={attackType} setAttackType={setAttackType} />
+      <AlertSearch
+        attackType={attackType}
+        setAttackType={setAttackType}
+        tableData={backendAlerts}
+      />
       <AlertGraph rowData={backendAlerts} attackType={attackType} />
-
-      {/* <h2>Alertas Simuladas</h2>
-      <div className="header">
-        <SimulateAttack onSimulate={handleSimulate} />
-      </div>
-      <AlertList alerts={simulatedAlerts.filter(alert => 
-        attackType === "todos" ? true : alert.tipo === attackType
-      )} />
-      <article className="graficos">
-        <Graficos /> */}
-
-      {/* </article> */}
     </section>
   );
 }
