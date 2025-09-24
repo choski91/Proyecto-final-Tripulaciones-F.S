@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const apiUrlRender = window._env_?.VITE_BACKEND_URL || "http://localhost:3000";
 
@@ -7,6 +8,7 @@ export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState({ type: "", text: "" });
+  const navigate = useNavigate();
 
   const onChange = (e) => {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
@@ -27,6 +29,7 @@ export default function Login() {
       );
 
       setMsg({ type: "ok", text: data.msg || "Login correcto" });
+        navigate("/tabla");
     } catch (err) {
       setMsg({
         type: "error",

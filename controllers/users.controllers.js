@@ -1,37 +1,31 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
-const { createUser } = require("../models/users.models");
+const { createUser, getUserByEmail } = require("../models/users.models");
 const saltRounds = 10;
 const pool = require("../config/sqlConfig");       
 const queries = require("../utils/queries");       
 
-async function register(req, res) {
-  if (!req.body) {
-    return res.status(400).json({ error: "No se recibió body en la petición" });
-  }
 
-  const { name, cif, email, password } = req.body;
-
+const register = async (req, res) => {
   try {
-    // Hashear la contraseña aquí en el servidor
-    const hashed_password = await bcrypt.hash(password, saltRounds);
+    const { nombre, cif, email, password } = req.body;
 
-    // Guardar el usuario en la base de datos
-    const newUser = await createUser(name, cif, email, hashed_password);
-
-    res.status(201).json({
-      message: "Usuario registrado con éxito",
-      user: { name, email }, // 👈 No devuelvas la contraseña
-    });
-  } catch (error) {
-    console.error("Error al registrar el usuario:", error);
-    if (error.code === "23505") {
-      return res.status(409).json({ message: "El email ya está en uso" });
+    // comprobar si ya existe
+    const existing = await getUserByEmail(email);
+    if (existing) {
+      return res.status(400).json({ error: "El usuario ya existe" });
     }
-    res.status(500).send("Error en el registro");
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = await createUser(nombre, cif, email, hashedPassword);
+    res.status(201).json({ message: "Usuario creado", user: newUser });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Error al registrar usuario" });
   }
-}
+};
 
 async function login(req, res) {
   if (!req.body) return res.status(400).json({ message: "Falta body" });
@@ -43,22 +37,23 @@ async function login(req, res) {
   try {
     client = await pool.connect();
 
-    // Debe existir queries.getUserByEmail = 'SELECT id,name,email,hashed_password FROM users WHERE email=$1 LIMIT 1'
+    // Debe existir queries.getUserByEmail = 'SELECT id_cliente, nombre, email, password, cif FROM clientes WHERE email = $1'
     const result = await client.query(queries.getUserByEmail, [email]);
     const user = result.rows[0];
     if (!user) return res.status(401).json({ message: "Usuario no encontrado" });
 
-    const ok = await bcrypt.compare(password, user.password); // 👈 usa hashed_password
+    // Cambia user.password (hash) y user.nombre
+    const ok = await bcrypt.compare(password, user.password);
     if (!ok) return res.status(401).json({ message: "Credenciales inválidas" });
 
     const accessToken = jwt.sign(
-      { id: user.id, name: user.name, email: user.email },
+      { id: user.id_cliente, name: user.nombre, email: user.email },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
 
     const refreshToken = jwt.sign(
-      { id: user.id },
+      { id: user.id_cliente },
       process.env.JWT_REFRESH_SECRET,
       { expiresIn: "7d" }
     );
@@ -68,22 +63,22 @@ async function login(req, res) {
     // Cookies seguras
     res
       .cookie("access_token", accessToken, {
-        httpOnly: true,                         // 👈 protege frente a XSS
+        httpOnly: true,
         secure: isProd,
         sameSite: isProd ? "none" : "lax",
-        maxAge: 60 * 60 * 1000,                // 1h
+        maxAge: 60 * 60 * 1000,
       })
       .cookie("refresh_token", refreshToken, {
         httpOnly: true,
         secure: isProd,
         sameSite: isProd ? "none" : "lax",
-        maxAge: 7 * 24 * 60 * 60 * 1000,       // 7 días
+        maxAge: 7 * 24 * 60 * 60 * 1000,
       })
       .set("Authorization", `Bearer ${accessToken}`)
       .status(200)
       .json({
         msg: "Login correcto",
-        user: { id: user.id, name: user.name, email: user.email },
+        user: { id: user.id_cliente, name: user.nombre, email: user.email },
         token: accessToken,
       });
   } catch (err) {
