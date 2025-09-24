@@ -138,11 +138,11 @@
       width: 240px;
       height: 100vh;
       /* Aumenta el padding-top para dejar espacio a la X */
-      padding: 4.5rem 1.5rem 1.5rem 1.5rem;
+      padding: 5.5rem 1.5rem 1.5rem 1.5rem; // <-- Reduce padding-top
       box-shadow: -2px 0 24px rgba(0,0,0,0.13);
       display: flex;
       z-index: 20;
-      gap: 1.5rem;
+      gap: 2.5rem; // <-- Aumenta el gap para separar la X de los botones
       align-items: flex-start;
       transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -168,6 +168,8 @@
     }
     &__burger {
       display: flex;
+      margin-right: 18px; // <-- Añade este margen para separar del borde
+      margin-top: 18px; // <-- Baja el botón burger/X
     }
   }
   body.menu-open {
