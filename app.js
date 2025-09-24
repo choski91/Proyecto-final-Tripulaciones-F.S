@@ -33,10 +33,6 @@ app.use('/alert', alertRoutes);
 
 app.use(express.static(path.join(__dirname, "client", "dist")));
 
-app.get('/', (req, res) => {
-  res.redirect('/login');
-});
-
 app.get(/^\/(?!api).*/, (req, res) => {
   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 });
