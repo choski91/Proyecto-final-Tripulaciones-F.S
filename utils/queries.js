@@ -1,9 +1,11 @@
 const queries = {
-      // USERS
-  getUserById: `SELECT * FROM clientes WHERE id=$1;`,
-  getUserByEmail: `SELECT * FROM clientes WHERE email=$1;`,
-  createUser: `INSERT INTO clientes (nombre, cif, email, password)
-            VALUES ($1,$2,$3,$4);`,
+  // USERS
+  getUserById: `SELECT * FROM clientes WHERE id_cliente=$1;`,
+  getUserByEmail: `SELECT id_cliente, nombre, email, password, cif FROM clientes WHERE email = $1;`,
+
+  createUser: `INSERT INTO clientes (nombre, cif, email, password) 
+               VALUES ($1, $2, $3, $4) 
+               RETURNING id_cliente, nombre, email, cif;`,
 
     getAllAlerts: `
 SELECT 
@@ -83,11 +85,6 @@ INNER JOIN estado_alerta e ON e.id_status = a.id_status
 INNER JOIN tipos_ataques t ON t.id_tipo = a.id_tipo
 ORDER BY a.id DESC;
 `,
-
-  // USERS
-  getUserById: `SELECT * FROM users WHERE id=$1;`,
-  getUserByEmail: `SELECT * FROM users WHERE email=$1;`,
-  createUser: `INSERT INTO users (name, email, hashed_password) VALUES ($1,$2,$3);`,
 
   // Alertas
   getAlertLogin: `SELECT 
