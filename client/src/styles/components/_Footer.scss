@@ -8,7 +8,6 @@
   text-align: center;
   z-index: 1; // por si tienes gráficos con overlays (leaflet, tooltips, etc.)
 
-
   .main {
     width: 97%;
     display: flex;
@@ -32,12 +31,37 @@
         margin: 0.5rem 0;
 
         a {
+          position: relative;
           text-decoration: none;
           color: #333;
           font-size: 0.9rem;
+          font-weight: 500;
+          letter-spacing: 0.02em;
+          transition: color 0.25s cubic-bezier(0.4,0,0.2,1);
 
-          &:hover {
-            text-decoration: underline;
+          // Animación underline moderna
+          &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 100%;
+            height: 2.5px;
+            background: linear-gradient(90deg, #0070ad 60%, #00c6fb 100%);
+            border-radius: 2px;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+          }
+
+          &:hover,
+          &:focus {
+            color: #0070ad;
+            outline: none;
+
+            &::after {
+              transform: scaleX(1);
+            }
           }
         }
       }
@@ -58,6 +82,8 @@
       img {
         width: 24px;
         height: 24px;
+        // No animación en el logo
+        transition: none;
       }
     }
   }
