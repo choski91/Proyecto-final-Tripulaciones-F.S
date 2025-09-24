@@ -23,7 +23,7 @@ export default function AlertContainer() {
   // Traer alertas del backend local
   useEffect(() => {
     const fetchBackendAlerts = async () => {
-      const apiUrlRender = "window._env_?.VITE_BACKEND_URL";
+      const apiUrlRender = window._env_?.VITE_BACKEND_URL;
       if (!apiUrlRender) {
         console.error("VITE_BACKEND_URL no está definido en window._env_");
         return;
