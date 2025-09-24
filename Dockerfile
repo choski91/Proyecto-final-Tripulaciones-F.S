@@ -12,7 +12,7 @@ RUN npm ci --omit=dev
 # 2. Copia solo los archivos de dependencias del frontend y las instala
 WORKDIR /app/client
 COPY client/package*.json ./
-RUN npm ci
+RUN npm install
 
 # 3. Copia el resto del código fuente (backend y frontend)
 WORKDIR /app
