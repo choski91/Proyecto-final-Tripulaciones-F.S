@@ -5,7 +5,7 @@ import axios from "axios";
 const apiUrlRender = (window._env_?.VITE_BACKEND_URL) || "http://localhost:3000";
 
 export default function SignUp() {
-  const [form, setForm] = useState({ name: "", email: "", password: "", confirm: "" });
+  const [form, setForm] = useState({ name: "", cif:"", email: "", password: "", confirm: "" });
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState({ type: "", text: "" });
   const navigate = useNavigate();
@@ -23,6 +23,7 @@ export default function SignUp() {
         `${apiUrlRender}/users/register`,
         {
           name: form.name.trim(),
+          cif: form.cif.trim(),
           email: form.email.trim().toLowerCase(),
           password: form.password,
         },
@@ -30,7 +31,7 @@ export default function SignUp() {
       );
 
       setMsg({ type: "ok", text: data.message || "Usuario registrado" });
-      setForm({ name: "", email: "", password: "", confirm: "" });
+      setForm({ name: "", cif:"", email: "", password: "", confirm: "" });
         setTimeout(() => {
         navigate("/login");
       }, 1500);
@@ -62,6 +63,10 @@ export default function SignUp() {
           <div className="field">
             <label>Nombre</label>
             <input name="name" value={form.name} onChange={onChange} />
+          </div>
+          <div className="field">
+            <label>CIF</label>
+            <input name="cif" value={form.cif} onChange={onChange} />
           </div>
           <div className="field">
             <label>Email</label>
