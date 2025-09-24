@@ -1,77 +1,71 @@
-# DockerFile-Full — Hardened, single-file build for Vite (SPA) apps on Render
-# - Multi-stage: build with Node, runtime with NGINX (no toolchains)
-# - Non-root runtime (user: nginx) listening on dynamic $PORT (Render)
-# - Clean shutdown with SIGTERM, security headers, SPA history fallback
+# Hardened Dockerfile for Node backend + Vite frontend (client/)
+# - Multi-stage: client build (with devDeps), backend prod deps, minimal runtime
+# - Non-root runtime (UID/GID 10001), Alpine base
+# - Dynamic $PORT (Render) and clean shutdown (SIGTERM)
+# - Robust entrypoint replaces placeholders in ./client/dist/env.js then starts backend
+# - NOTE: Ensure your app listens on 0.0.0.0:$PORT (default 8080)
 
-# ---------- BUILD: compile assets with devDependencies (includes Vite) ----------
-FROM node:22-alpine AS build
+########## STAGE 1: Build frontend (client) ##########
+FROM node:22-alpine AS client-build
 WORKDIR /app/client
 
-# Copia sólo los archivos necesarios para instalar dependencias y hacer el build
-COPY client/package.json client/package-lock.json ./
+# Install client deps using lockfile if present
+COPY client/package*.json ./
 RUN npm ci
-
-# Copia el resto del código fuente del frontend
-COPY client ./
-
-# Build de frontend
+# Copy client source and build
+COPY client/ ./
 RUN npm run build
 
-# ---------- RUNTIME: NGINX minimal, non-root, dynamic port ----------
-FROM nginx:1.27-alpine AS runtime
+########## STAGE 2: Install backend production deps ##########
+FROM node:22-alpine AS backend-deps
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --omit=dev
 
-# Use a non-privileged port by default (Render sets $PORT)
-ENV PORT=10000
+########## STAGE 3: Runtime ##########
+FROM node:22-alpine AS runtime
 
-# Necesitamos 'envsubst' para renderizar $PORT en la config de nginx
-USER root
-RUN apk add --no-cache gettext
+ENV NODE_ENV=production \
+    PORT=8080
 
-# Copia los assets estáticos construidos
-COPY --from=build /app/client/dist /usr/share/nginx/html
+WORKDIR /app
 
-# Plantilla de configuración de nginx
-RUN <<'EOF' /bin/sh -c 'cat > /etc/nginx/templates.default.conf.template'
-server {
-  listen       ${PORT};
-  listen       [::]:${PORT};
-  server_name  _;
-  root   /usr/share/nginx/html;
-  index  index.html;
+# Create stable non-root user/group
+RUN addgroup -g 10001 app && adduser -D -u 10001 -G app app
 
-  # Single Page App fallback (history mode)
-  location / {
-    try_files $uri $uri/ /index.html;
-  }
+# Copy backend source first (avoid host node_modules)
+COPY --chown=10001:10001 . .
+# Remove any accidental node_modules brought from the host context
+RUN rm -rf node_modules client/node_modules
 
-  # Basic security headers
-  add_header X-Content-Type-Options nosniff always;
-  add_header X-Frame-Options SAMEORIGIN always;
-  add_header X-XSS-Protection "1; mode=block" always;
-  # Consider adding a strict Content-Security-Policy tailored to your app.
-}
-EOF
+# Copy production node_modules and built frontend assets
+COPY --chown=10001:10001 --from=backend-deps /app/node_modules ./node_modules
+COPY --chown=10001:10001 --from=client-build /app/client/dist ./client/dist
 
-# Entrypoint para generar el config final con $PORT al arrancar el contenedor
-RUN <<'EOF' /bin/sh -c 'cat > /entrypoint.sh' && chmod +x /entrypoint.sh
+# Create an entrypoint to apply runtime env and start the server
+# Defaults for VITE_BACKEND_* are applied only if not provided by the platform
+RUN <<'SH' /bin/sh -lc 'cat > /entrypoint.sh' && chmod +x /entrypoint.sh
 #!/bin/sh
 set -eu
-: "${PORT:=10000}"
-# Renderiza la plantilla en la config de NGINX
-envsubst '$PORT' < /etc/nginx/templates.default.conf.template > /etc/nginx/conf.d/default.conf
-exec "$@"
-EOF
 
-# Da permisos de escritura al usuario nginx sobre la carpeta de config de nginx
-RUN chown -R nginx:nginx /etc/nginx/conf.d
+: "${PORT:=8080}"
+: "${VITE_BACKEND_PYTHON:=https://mi-backend-por-defecto.com}"
+: "${VITE_BACKEND_URL:=https://mi-backend-url-por-defecto.com}"
 
-# Cambia a usuario nginx para el runtime seguro
-USER nginx
+# Replace placeholders in client/dist/env.js if the file exists
+if [ -f "./client/dist/env.js" ]; then
+  sed -i -e "s|__VITE_BACKEND_PYTHON__|${VITE_BACKEND_PYTHON}|g" \
+         -e "s|__VITE_BACKEND_URL__|${VITE_BACKEND_URL}|g" ./client/dist/env.js || true
+fi
 
-# Exponer el puerto dinámico (informativo)
-EXPOSE 10000
+# Start backend
+exec node app.js
+SH
+
+EXPOSE 8080
 STOPSIGNAL SIGTERM
 
-# Usa nuestro entrypoint para inyectar $PORT y lanzar nginx
+# Drop privileges for runtime
+USER 10001:10001
+
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["nginx", "-g", "daemon off;"]
