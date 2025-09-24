@@ -7,16 +7,18 @@ const queries = {
 
     getAllAlerts: `
 SELECT 
+  a.id,
   a.fecha,
   COALESCE(a.ip, 'Desconocido') AS ip,
   e.descripcion AS estado_desc,
   t.codigo      AS tipo_codigo,
   t.descripcion AS tipo_desc,
-    COALESCE(a.riesgo, 'Desconocido') as riesgo,
-  a.score as score_final
+  COALESCE(a.riesgo, 'Desconocido') AS riesgo,
+  COALESCE(a.score::text, 'N/A') AS score_final
 FROM (
   -- DDOS
   SELECT
+    id,
     fecha,
     ip,
     riesgo,
@@ -29,6 +31,7 @@ FROM (
 
   -- DOS
   SELECT
+    id,
     fecha,
     ip,
     riesgo,
@@ -41,6 +44,7 @@ FROM (
 
   -- Fuerza bruta
   SELECT
+    id,
     fecha,
     ip,
     riesgo,
@@ -53,6 +57,7 @@ FROM (
 
   -- Login sospechoso
   SELECT
+    id,
     fecha,
     ip,
     score_abuse::text AS riesgo,
@@ -65,6 +70,7 @@ FROM (
 
   -- Phishing
   SELECT
+    id,
     fecha,
     NULL::text AS ip,
     risk_level AS riesgo,
@@ -75,8 +81,7 @@ FROM (
 ) a
 INNER JOIN estado_alerta e ON e.id_status = a.id_status
 INNER JOIN tipos_ataques t ON t.id_tipo = a.id_tipo
-ORDER BY a.fecha DESC NULLS LAST;
-
+ORDER BY a.id DESC;
 `,
 
   // USERS

@@ -9,6 +9,14 @@ const ROW_HEIGHT = 40;
 const HEADER_HEIGHT = 50;
 const PADDING = 50;
 
+const formatFechaLocal = v => {
+  if (!v) return "";
+  const d = new Date(v);
+  return new Intl.DateTimeFormat("es-ES", {
+    day: "2-digit", month: "2-digit", year: "numeric"
+  }).format(d);
+};
+
 const columnDefs = [
   { headerName: "Descripcion", field: "tipo_desc", sortable: true, filter: true },
   { headerName: "Tipo", field: "tipo_codigo", sortable: true, filter: true },
@@ -16,6 +24,10 @@ const columnDefs = [
   { headerName: "Estado", field: "estado_desc", sortable: true, filter: true },
   { headerName: "Riesgo", field: "riesgo", sortable: true, filter: true },
   { headerName: "Score", field: "score_final", sortable: true, filter: true },
+  { headerName: "Fecha", field: "fecha",
+  sortable: true, filter: true,
+  valueFormatter: p => formatFechaLocal(p.value)
+}
 ];
 
 function AlertGraph({ rowData }) {
