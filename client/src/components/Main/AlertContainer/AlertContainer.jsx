@@ -6,7 +6,7 @@ import AlertSearch from "./AlertSearch";
 import SimulateAttack from "./SimulateAttack";
 import Graficos from "./Graficos";
 
-const API_BASE = window._env_.VITE_BACKEND_PYTHON;;
+const API_BASE = window._env_.VITE_BACKEND_URL;
 
 export default function AlertContainer() {
   // Tabla 1: alertas del backend local
