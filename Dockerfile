@@ -1,28 +1,50 @@
-FROM node:18-alpine
+# ---------- STAGE 1: BUILD (compila dependencias y genera wheels) ----------
+FROM python:3.12-slim AS build
+
+ENV PIP_NO_CACHE_DIR=1     PYTHONDONTWRITEBYTECODE=1     PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-# Copiar dependencias del backend
-COPY package*.json ./
-RUN npm install
+# Paquetes de compilación para psycopg2 y deps nativas
+RUN apt-get update && apt-get install -y --no-install-recommends       build-essential gcc libpq-dev     && rm -rf /var/lib/apt/lists/*
 
-# Copiar el resto del proyecto
+# Instala herramientas de empaquetado y genera wheels reproducibles
+COPY requirements.txt .
+RUN pip install --upgrade pip wheel  && pip wheel --no-cache-dir --wheel-dir /wheels -r requirements.txt
+
+# Copiamos el código (por si hubiera paquetes locales)
 COPY . .
+# Si tu proyecto genera wheel propio:
+# RUN pip wheel . -w /wheels
 
-# Build del frontend
-WORKDIR /app/client
-RUN npm install && npm run build
+# ---------- STAGE 2: RUNTIME (mínimo, sin toolchains) ----------
+FROM python:3.12-slim AS runtime
 
-# Volver al backend
+ENV PYTHONDONTWRITEBYTECODE=1     PYTHONUNBUFFERED=1     PIP_NO_CACHE_DIR=1     PORT=10000
+
+# Sólo librerías de ejecución (libpq para psycopg2)
+RUN apt-get update && apt-get install -y --no-install-recommends       libpq5     && rm -rf /var/lib/apt/lists/*
+
+# Usuario/grupo no-root estable
+RUN groupadd -g 10001 app && useradd -u 10001 -g 10001 -M -s /usr/sbin/nologin app
+
 WORKDIR /app
-EXPOSE 8080
 
-# Variables por defecto si no se definen en Render
-ARG DEFAULT_VITE_BACKEND_PYTHON=https://mi-backend-por-defecto.com
-ARG DEFAULT_VITE_BACKEND_URL=https://mi-backend-url-por-defecto.com
+# Instala desde wheels precompiladas (evita toolchains en runtime)
+COPY --from=build /wheels /wheels
+COPY requirements.txt .
+RUN pip install --no-index --find-links=/wheels -r requirements.txt  && rm -rf /wheels
 
-ENV VITE_BACKEND_PYTHON=${VITE_BACKEND_PYTHON:-$DEFAULT_VITE_BACKEND_PYTHON}
-ENV VITE_BACKEND_URL=${VITE_BACKEND_URL:-$DEFAULT_VITE_BACKEND_URL}
+# Copia sólo el código necesario, con ownership mínimo
+COPY --chown=10001:10001 . .
 
-# Reemplazar placeholders en el frontend y arrancar backend
-CMD sed -i 's|__VITE_BACKEND_PYTHON__|'"$VITE_BACKEND_PYTHON"'|g; s|__VITE_BACKEND_URL__|'"$VITE_BACKEND_URL"'|g' ./client/dist/env.js && node app.js
+# Expone el puerto (Render usará $PORT)
+EXPOSE 10000
+STOPSIGNAL SIGTERM
+
+# Ejecutar como usuario no-root
+USER 10001:10001
+
+# Lanza entrypoint dinámico que lee $PORT y arranca Gunicorn
+# Asegúrate de tener entrypoint.py en la raíz del proyecto
+CMD ["python", "-u", "entrypoint.py"]
