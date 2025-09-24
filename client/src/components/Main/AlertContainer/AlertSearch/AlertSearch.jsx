@@ -6,11 +6,19 @@ const AlertSearch = ({ attackType, setAttackType, tableData }) => {
 
   const handleExportCSV = () => {
     if (!tableData || tableData.length === 0) return;
-    // Convierte los datos a una hoja de cálculo
-    const worksheet = XLSX.utils.json_to_sheet(tableData);
+
+    // Mapea los datos para formatear la fecha en formato local
+    const dataWithLocalDate = tableData.map(row => ({
+      ...row,
+      // Cambia 'fecha' por el nombre real de tu campo de fecha
+      fecha: row.fecha
+        ? new Date(row.fecha).toLocaleString()
+        : row.fecha,
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(dataWithLocalDate);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Datos");
-    // Genera y descarga el archivo CSV
     XLSX.writeFile(workbook, "alertas.csv", { bookType: "csv" });
   };
 
