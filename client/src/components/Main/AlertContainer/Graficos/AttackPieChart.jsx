@@ -14,7 +14,7 @@ export default function AttackPieChart() {
       console.error("VITE_BACKEND_PYTHON no está definido en window._env_");
       return;
     }
-    fetch(`${apiUrl}/ataques-por-tipo`)
+    fetch(`https://trabajo-grupal.onrender.com/ataques-por-tipo`)
 
       .then((res) => res.json())
       .then((json) => {

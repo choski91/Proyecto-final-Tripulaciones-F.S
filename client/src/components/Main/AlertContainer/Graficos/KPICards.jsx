@@ -1,48 +1,42 @@
 import React, { useEffect, useState } from "react";
+import { Grid, Card, CardContent, Typography } from "@mui/material";
 
 function KPICards() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    const apiUrl = window._env_?.VITE_BACKEND_PYTHON;
-    if (!apiUrl) {
-      console.error("VITE_BACKEND_PYTHON no está definido en window._env_");
-      return;
-    }
-    fetch(`${apiUrl}/kpis`)
+    fetch("https://trabajo-grupal.onrender.com/kpis") // 👈 asegúrate que coincide con tu backend
       .then((res) => res.json())
-      .then((d) => setData(d))
-      .catch((err) => console.error("Error fetching KPIs:", err));
+      .then((json) => setData(json))
+      .catch((err) => console.error("Error cargando KPIs:", err));
   }, []);
 
   if (!data) return <p>Cargando KPIs...</p>;
 
   const kpis = [
-    { title: "Total ataques", value: data.total_alertas },
-    { title: "Ataques últimos 24h", value: data.ultimas_24h },
-    { title: "Media severidad", value: data.media_riesgo },
-    { title: "Usuarios afectados", value: data.clientes_afectados },
-    { title: "Tiempo medio resolución", value: data.tiempo_resolucion },
+    { title: "Total alertas", value: data.total_alertas },
+    { title: "Últimas 24h", value: data.ultimas_24h },
+    { title: "Media severidad", value: data.nivel_riesgo }, // 👈 cambiado
+    { title: "Clientes afectados", value: data.clientes_afectados }
   ];
 
   return (
-    <div style={{ display: "flex", gap: "20px", justifyContent: "center" }}>
+    <Grid container spacing={2} justifyContent="center" alignItems="center">
       {kpis.map((kpi, index) => (
-        <div
-          key={index}
-          style={{
-            background: "#f8f8f8",
-            padding: "20px",
-            borderRadius: "10px",
-            textAlign: "center",
-            width: "220px",
-          }}
-        >
-          <h3>{kpi.title}</h3>
-          <p style={{ fontSize: "24px", fontWeight: "bold" }}>{kpi.value}</p>
-        </div>
+        <Grid item xs={12} sm={6} md={3} key={index}>
+          <Card sx={{ textAlign: "center", p: 2, bgcolor: "#f9f9f9" }}>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                {kpi.title}
+              </Typography>
+              <Typography variant="h5" fontWeight="bold">
+                {kpi.value}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
       ))}
-    </div>
+    </Grid>
   );
 }
 

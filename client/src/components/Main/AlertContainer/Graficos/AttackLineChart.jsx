@@ -37,9 +37,9 @@ export default function AttackLineChart() {
         let response;
         if (range === "7d") {
 
-          response = await fetch(`${apiUrl}/ataques-ultimos-7-dias`);
+          response = await fetch(`https://trabajo-grupal.onrender.com/ataques-ultimos-7-dias`);
         } else {
-          response = await fetch(`${apiUrl}/ataques-ultimas-24h`);
+          response = await fetch(`https://trabajo-grupal.onrender.com/ataques-ultimas-24h`);
         }
 
         const result = await response.json();

@@ -1,66 +1,81 @@
 import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer, CircleMarker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Circle, Tooltip } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { COUNTRY_CODES } from "../../../../data/countryCodes";
-import COUNTRY_COORDS from "../../../../data/countryCoords";
 
-const AttackMap = () => {
+export default function AttackMap() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-
-    const apiUrl = window._env_?.VITE_BACKEND_PYTHON;
-    if (!apiUrl) {
-      console.error("VITE_BACKEND_PYTHON no está definido en window._env_");
-      return;
-    }
-    fetch(`${apiUrl}/ataques-por-pais`)
-
+    fetch("https://trabajo-grupal.onrender.com/ataques-por-pais")
       .then((res) => res.json())
-      .then((data) => setData(data))
-      .catch((err) => console.error("Error fetching ataques por pais:", err));
+      .then((json) => {
+        console.log("📍 Datos mapa:", json);
+        setData(json);
+      })
+      .catch((err) => console.error("Error cargando mapa:", err));
   }, []);
 
+  if (!data || data.length === 0) {
+    return <p style={{ textAlign: "center" }}>Cargando mapa...</p>;
+  }
+
+  // 🔎 Buscar valores min y max para normalización
+  const min = Math.min(...data.map(d => d.count));
+  const max = Math.max(...data.map(d => d.count));
+
+  // 🔥 Función para calcular radio proporcional con tope
+  function getRadius(value) {
+    const minRadius = 20000;   // radio mínimo (20 km)
+    const maxRadius = 500000;  // radio máximo (500 km)
+    const ratio = (value - min) / (max - min || 1); // normalizar entre 0-1
+    return minRadius + ratio * (maxRadius - minRadius);
+  }
+
+  // 🌍 Diccionario de países -> coordenadas aproximadas
+  const countryCoords = {
+    US: [37.0902, -95.7129],
+    ES: [40.4637, -3.7492],
+    FR: [46.2276, 2.2137],
+    DE: [51.1657, 10.4515],
+    GB: [55.3781, -3.4360],
+    CN: [35.8617, 104.1954],
+    IN: [20.5937, 78.9629],
+    RU: [61.5240, 105.3188],
+    BR: [-14.2350, -51.9253],
+    // ⚠️ añade más países según lo que devuelva tu backend
+  };
+
   return (
-    <div>
-      <h2 style={{ textAlign: "center" }}>Mapa de ataques por país</h2>
-      <MapContainer
-        center={[20, 0]}
-        zoom={2}
-        style={{ height: "500px", width: "100%" }}
-      >
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution="&copy; OpenStreetMap contributors"
-        />
+    <MapContainer
+      center={[20, 0]}
+      zoom={2}
+      style={{ height: "500px", width: "100%" }}
+    >
+      <TileLayer
+        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
 
-        {data.map((item, index) => {
-          const coords = COUNTRY_COORDS[item.country];
+      {data.map((item, idx) => {
+        const coords = countryCoords[item.country];
+        if (!coords) return null; // ignorar si no tenemos coords
 
-          if (!coords || coords.lat === undefined || coords.lng === undefined) {
-            console.warn("Coordenadas faltantes para:", item.country);
-            return null;
-          }
-
-          return (
-            <CircleMarker
-              key={index}
-              center={[coords.lat, coords.lng]}
-              radius={5 + item.count}
-              fillOpacity={0.6}
-              color="red"
-            >
-              <Popup>
-                <strong>{COUNTRY_CODES[item.country] || item.country}</strong>
-                <br />
-                Ataques: {item.count}
-              </Popup>
-            </CircleMarker>
-          );
-        })}
-      </MapContainer>
-    </div>
+        return (
+          <Circle
+            key={idx}
+            center={coords}
+            radius={getRadius(item.count)}
+            color="red"
+            fillColor="red"
+            fillOpacity={0.5}
+          >
+            <Tooltip>
+              <strong>{item.country}</strong> <br />
+              Ataques: {item.count}
+            </Tooltip>
+          </Circle>
+        );
+      })}
+    </MapContainer>
   );
-};
-
-export default AttackMap;
+}

@@ -12,7 +12,7 @@ export default function TopIPsChart() {
       console.error("VITE_BACKEND_PYTHON no está definido en window._env_");
       return;
     }
-    fetch(`${apiUrl}/top-ips`)
+    fetch(`https://trabajo-grupal.onrender.com/top-ips`)
 
       .then((res) => res.json())
       .then((json) => setData(json))
@@ -46,7 +46,7 @@ export default function TopIPsChart() {
   };
 
   return (
-    <div style={{ width: "100%", height: "400px" }}>
+    <div style={{ width: "100%", height: "400px", justifyContent: "center", alignItems: "center", display: "flex" }}>
       <Bar data={chartData} options={options} />
     </div>
   );
