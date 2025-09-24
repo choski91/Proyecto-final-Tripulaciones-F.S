@@ -1,20 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+// import "./Header.scss";
 
 const Header = () => {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (open) document.body.classList.add('menu-open');
+    else document.body.classList.remove('menu-open');
+    return () => document.body.classList.remove('menu-open');
+  }, [open]);
+
   return (
     <header className="header">
       <div className="header__icon">
         <img src="/logotripulacion.png" alt="Logo" />
       </div>
-      <nav className="header__nav">
-        <Link to="/tabla" className="header__link">Tabla</Link>
-        <Link to="/graficos" className="header__link">Gráfico</Link>
-        <Link to="/simulador" className="header__link">Simulador</Link>
-      </nav>
-      <button className="header__logout">
-        <Link to="/login" className="header__logout">Log Out</Link>
+      <button
+        className={`header__burger${open ? " header__burger--open" : ""}`}
+        onClick={() => setOpen((prev) => !prev)}
+        aria-label="Abrir menú"
+      >
+        <span />
+        <span />
+        <span />
       </button>
+      <nav className={`header__nav${open ? " header__nav--open" : ""}`}>
+        <Link to="/tabla" className="header__link" onClick={() => setOpen(false)}>Tabla</Link>
+        <Link to="/graficos" className="header__link" onClick={() => setOpen(false)}>Gráfico</Link>
+        <Link to="/simulador" className="header__link" onClick={() => setOpen(false)}>Simulador</Link>
+        <Link to="/login" className="header__logout" onClick={() => setOpen(false)}>Log Out</Link>
+      </nav>
     </header>
   );
 };
