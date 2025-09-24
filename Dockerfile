@@ -14,7 +14,7 @@ COPY . .
 
 # Build frontend assets
 WORKDIR /app/client
-RUN npm ci --omit=dev && npm run build
+RUN npm ci && npm run build
 
 # Stage 2: Runtime (minimal, non-root, no build tools)
 FROM node:18-alpine AS runtime
