@@ -25,6 +25,7 @@
     "react-dom": "^19.1.1",
     "react-leaflet": "^5.0.0",
     "react-router-dom": "^7.9.1",
+    "recharts": "^3.2.1",
     "sass": "^1.92.1"
   },
   "devDependencies": {
