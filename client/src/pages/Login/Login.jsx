@@ -4,7 +4,7 @@ import axios from "axios";
 const apiUrlRender = window._env_?.VITE_BACKEND_URL || "http://localhost:3000";
 
 export default function Login() {
-  const [form, setForm] = useState({ email: "", password: "" });
+  const [form, setForm] = useState({cif: "", email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState({ type: "", text: "" });
 
@@ -50,6 +50,16 @@ export default function Login() {
             {msg.text}
           </div>
         )}
+
+        <div className="field">
+          <label>CIF</label>
+          <input
+          name="cif"
+          type="text"
+          value={form.cif}
+          onChange={onChange}
+         />
+        </div>
 
         <form className="auth__form" onSubmit={onSubmit}>
           <div className="field">

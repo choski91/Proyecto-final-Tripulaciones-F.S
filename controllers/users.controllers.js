@@ -11,14 +11,14 @@ async function register(req, res) {
     return res.status(400).json({ error: "No se recibió body en la petición" });
   }
 
-  const { name, email, password } = req.body;
+  const { name, cif, email, password } = req.body;
 
   try {
     // Hashear la contraseña aquí en el servidor
     const hashed_password = await bcrypt.hash(password, saltRounds);
 
     // Guardar el usuario en la base de datos
-    const newUser = await createUser(name, email, hashed_password);
+    const newUser = await createUser(name, cif, email, hashed_password);
 
     res.status(201).json({
       message: "Usuario registrado con éxito",

@@ -2,8 +2,8 @@ const queries = {
       // USERS
   getUserById: `SELECT * FROM clientes WHERE id=$1;`,
   getUserByEmail: `SELECT * FROM clientes WHERE email=$1;`,
-  createUser: `INSERT INTO clientes (nombre, email, password)
-            VALUES ($1,$2,$3);`,
+  createUser: `INSERT INTO clientes (nombre, cif, email, password)
+            VALUES ($1,$2,$3,$4);`,
 
     //Alert
     getAlertLogin: `SELECT * FROM alertas_login_sospechoso;`,
