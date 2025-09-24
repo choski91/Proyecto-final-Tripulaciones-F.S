@@ -9,6 +9,10 @@ const port = process.env.PORT || 3000;
 const morgan = require('morgan');
 const cors = require('cors');
 
+const helmet = require('helmet');
+
+app.use(helmet.frameguard({ action: 'sameorigin' })); 
+
 app.use(cors({
   origin: [
     "http://localhost:5173",

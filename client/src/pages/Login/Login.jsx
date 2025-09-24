@@ -18,7 +18,7 @@ export default function Login() {
     setLoading(true);
     try {
       const { data } = await axios.post(
-        `${apiUrlRender}/users/login`,
+        `http://localhost:3000/users/login`,
         {
           email: form.email.trim().toLowerCase(),
           password: form.password,
