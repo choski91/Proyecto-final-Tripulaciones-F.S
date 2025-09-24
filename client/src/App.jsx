@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 import SignUp from "./pages/SignUp";
 import LogIn from "./pages/Login";
@@ -24,6 +24,7 @@ function App() {
     <>
       {!hideHeader && <Header />}
       <Routes>
+        <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/logout" element={<LogIn />} />
