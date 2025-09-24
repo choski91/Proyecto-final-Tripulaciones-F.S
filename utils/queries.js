@@ -5,128 +5,78 @@ const queries = {
   createUser: `INSERT INTO clientes (nombre, email, password)
             VALUES ($1,$2,$3);`,
 
-    //Alert
-    getAlertLogin: `SELECT * FROM alertas_login_sospechoso;`,
-
-    //PHISHING
-    getAlertPhishing: `SELECT * FROM alertas_phishing;`,
-
-    getAllAlerts: `SELECT *
+    getAllAlerts: `
+SELECT 
+  a.fecha,
+  COALESCE(a.ip, 'Desconocido') AS ip,
+  e.descripcion AS estado_desc,
+  t.codigo      AS tipo_codigo,
+  t.descripcion AS tipo_desc,
+    COALESCE(a.riesgo, 'Desconocido') as riesgo,
+  a.score as score_final
 FROM (
   -- DDOS
   SELECT
-    id,
-    id_cliente,
-    id_tipo,
     fecha,
-    hora,
     ip,
-    codigo_pais::text AS codigo_pais,
-    sources    AS requests,      
-    NULL::integer AS intentos,   
-    ratio::numeric,
-    as_owner,
-    isp,
-    vpn,
-    score_final,
     riesgo,
-    'ddos' AS tipo_alerta,
-    to_jsonb(alertas_ddos.*) - ARRAY['id','id_cliente','id_tipo','fecha','hora','ip','codigo_pais','sources','ratio','as_owner','isp','vpn','score_final','riesgo'] AS extra
+    score_final AS score,
+    id_status,
+    id_tipo
   FROM public.alertas_ddos
 
   UNION ALL
 
   -- DOS
   SELECT
-    id,
-    id_cliente,
-    id_tipo,
     fecha,
-    hora,
     ip,
-    codigo_pais::text AS codigo_pais,
-    requests    AS requests,     
-    NULL::integer AS intentos,
-    ratio::numeric,
-    as_owner,
-    isp,
-    vpn,
-    score_final,
     riesgo,
-    'dos' AS tipo_alerta,
-    to_jsonb(alertas_dos.*) - ARRAY['id','id_cliente','id_tipo','fecha','hora','ip','codigo_pais','requests','ratio','as_owner','isp','vpn','score_final','riesgo'] AS extra
+    score_final AS score,
+    id_status,
+    id_tipo
   FROM public.alertas_dos
 
   UNION ALL
 
-  -- Fuerza bruta (corrigido ratio)
+  -- Fuerza bruta
   SELECT
-    id,
-    id_cliente,
-    id_tipo,
     fecha,
-    hora,
     ip,
-    codigo_pais::text AS codigo_pais,
-    NULL::integer AS requests,
-    intentos::integer AS intentos,
-    ratio::numeric,   -- aquí ya es 'ratio'
-    as_owner,
-    isp,
-    vpn,
-    score_final,
     riesgo,
-    'fuerza_bruta' AS tipo_alerta,
-    to_jsonb(alertas_fuerza_bruta.*) - ARRAY['id','id_cliente','id_tipo','fecha','hora','ip','codigo_pais','intentos','ratio','as_owner','isp','vpn','score_final','riesgo'] AS extra
+    score_final AS score,
+    id_status,
+    id_tipo
   FROM public.alertas_fuerza_bruta
 
   UNION ALL
 
   -- Login sospechoso
   SELECT
-    id,
-    id_cliente,
-    id_tipo,
     fecha,
-    hora,
     ip,
-    pais::text AS codigo_pais,         
-    NULL::integer AS requests,
-    intentos::integer AS intentos,
-    ratio_intentos::numeric AS ratio,   -- aquí sí se llama 'ratio_intentos'
-    NULL::text AS as_owner,
-    isp,
-    NULL::boolean AS vpn,
-    score_vt::numeric    AS score_final, 
-    score_abuse::text    AS riesgo,      
-    'login_sospechoso' AS tipo_alerta,
-    to_jsonb(alertas_login_sospechoso.*) - ARRAY['id','id_cliente','id_tipo','fecha','hora','ip','pais','intentos','ratio_intentos','isp','score_vt','score_abuse'] AS extra
+    score_abuse::text AS riesgo,
+    score_vt::numeric AS score,
+    id_status,
+    id_tipo
   FROM public.alertas_login_sospechoso
 
   UNION ALL
 
   -- Phishing
   SELECT
-    id,
-    id_cliente,
-    id_tipo,
     fecha,
-    hora,
     NULL::text AS ip,
-    NULL::text AS codigo_pais,
-    NULL::integer AS requests,
-    NULL::integer AS intentos,
-    NULL::numeric AS ratio,
-    NULL::text AS as_owner,
-    NULL::text AS isp,
-    NULL::boolean AS vpn,
-    score_final,
-    risk_level AS riesgo,   -- en phishing se llama risk_level
-    'phishing' AS tipo_alerta,
-    to_jsonb(alertas_phishing.*) - ARRAY['id','id_cliente','id_tipo','fecha','hora','ip','url','score_final','risk_level'] AS extra
+    risk_level AS riesgo,
+    score_final AS score,
+    id_status,
+    id_tipo
   FROM public.alertas_phishing
-) all_alerts
-ORDER BY fecha DESC NULLS LAST, id ASC;
+) a
+INNER JOIN estado_alerta e ON e.id_status = a.id_status
+INNER JOIN tipos_ataques t ON t.id_tipo = a.id_tipo
+ORDER BY a.fecha DESC NULLS LAST;
+
 `,
 
   // USERS
@@ -135,11 +85,61 @@ ORDER BY fecha DESC NULLS LAST, id ASC;
   createUser: `INSERT INTO users (name, email, hashed_password) VALUES ($1,$2,$3);`,
 
   // Alertas
-  getAlert: `SELECT * FROM alertas_login_sospechoso;`,
-  getAlertPhishing: `SELECT * FROM alertas_phishing;`,
-  getAlertDdos: `SELECT * FROM alertas_ddos;`,
-  getAlertDos: `SELECT * FROM alertas_dos;`,
-  getAlertFuerzaBruta: `SELECT * FROM alertas_fuerza_bruta;`,
+  getAlertLogin: `SELECT 
+    a.fecha,
+    a.ip,
+    e.descripcion    AS estado_desc,
+    t.codigo         AS tipo_codigo,
+    t.descripcion    AS tipo_desc,
+	a.riesgo    AS riesgo,
+	a.score_final    AS score_final
+FROM public.alertas_login_sospechoso a
+INNER JOIN estado_alerta e ON e.id_status = a.id_status
+INNER JOIN tipos_ataques t ON t.id_tipo = a.id_tipo;`,
+  getAlertPhishing: `SELECT 
+    p.fecha,
+    p.ip,
+    e.descripcion    AS estado_desc,
+    t.codigo         AS tipo_codigo,
+    t.descripcion    AS tipo_desc,
+	p.riesgo    AS riesgo,
+	p.score_final    AS score_final
+FROM public.alertas_phishing p
+INNER JOIN estado_alerta e ON e.id_status = p.id_status
+INNER JOIN tipos_ataques t ON t.id_tipo = p.id_tipo;`,
+  getAlertDdos: `SELECT 
+    d.fecha,
+    d.ip,
+    e.descripcion    AS estado_desc,
+    t.codigo         AS tipo_codigo,
+    t.descripcion    AS tipo_desc,
+	d.riesgo    AS riesgo,
+	d.score_final    AS score_final
+FROM public.alertas_ddos d
+INNER JOIN estado_alerta e ON e.id_status = d.id_status
+INNER JOIN tipos_ataques t ON t.id_tipo = d.id_tipo;`,
+  getAlertDos: `SELECT 
+    d.fecha,
+    d.ip,
+    e.descripcion    AS estado_desc,
+    t.codigo         AS tipo_codigo,
+    t.descripcion    AS tipo_desc,
+	d.riesgo    AS riesgo,
+	d.score_final    AS score_final
+FROM public.alertas_dos d
+INNER JOIN estado_alerta e ON e.id_status = d.id_status
+INNER JOIN tipos_ataques t ON t.id_tipo = d.id_tipo;`,
+  getAlertFuerzaBruta: `SELECT 
+    f.fecha,
+    f.ip,
+    e.descripcion    AS estado_desc,
+    t.codigo         AS tipo_codigo,
+    t.descripcion    AS tipo_desc,
+	f.riesgo    AS riesgo,
+	f.score_final    AS score_final
+FROM public.alertas_fuerza_bruta f
+INNER JOIN estado_alerta e ON e.id_status = f.id_status
+INNER JOIN tipos_ataques t ON t.id_tipo = f.id_tipo;`,
 };
 
 
