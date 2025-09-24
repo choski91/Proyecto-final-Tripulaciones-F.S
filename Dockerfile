@@ -1,35 +1,36 @@
 # DockerFile-Full — Hardened, single-file build for Vite (SPA) apps on Render
-# - Fixes "vite not found" by installing devDependencies during build (npm ci)
 # - Multi-stage: build with Node, runtime with NGINX (no toolchains)
 # - Non-root runtime (user: nginx) listening on dynamic $PORT (Render)
 # - Clean shutdown with SIGTERM, security headers, SPA history fallback
 
 # ---------- BUILD: compile assets with devDependencies (includes Vite) ----------
-# Stage 1: Build frontend
 FROM node:22-alpine AS build
 WORKDIR /app/client
 
+# Copia sólo los archivos necesarios para instalar dependencias y hacer el build
 COPY client/package.json client/package-lock.json ./
 RUN npm ci
+
+# Copia el resto del código fuente del frontend
 COPY client ./
+
+# Build de frontend
 RUN npm run build
 
 # ---------- RUNTIME: NGINX minimal, non-root, dynamic port ----------
-# Stage 2: NGINX runtime
 FROM nginx:1.27-alpine AS runtime
 
 # Use a non-privileged port by default (Render sets $PORT)
 ENV PORT=10000
 
-# We need 'envsubst' to render $PORT into nginx config
+# Necesitamos 'envsubst' para renderizar $PORT en la config de nginx
 USER root
 RUN apk add --no-cache gettext
 
-# Copy built static assets
+# Copia los assets estáticos construidos
 COPY --from=build /app/client/dist /usr/share/nginx/html
 
-# Provide nginx config template (uses $PORT) and a tiny entrypoint to render it
-# nginx.conf.template
+# Plantilla de configuración de nginx
 RUN <<'EOF' /bin/sh -c 'cat > /etc/nginx/templates.default.conf.template'
 server {
   listen       ${PORT};
@@ -51,23 +52,26 @@ server {
 }
 EOF
 
-# entrypoint to generate final config with actual $PORT
+# Entrypoint para generar el config final con $PORT al arrancar el contenedor
 RUN <<'EOF' /bin/sh -c 'cat > /entrypoint.sh' && chmod +x /entrypoint.sh
 #!/bin/sh
 set -eu
 : "${PORT:=10000}"
-# Render the template into NGINX conf.d (overrides default server)
+# Renderiza la plantilla en la config de NGINX
 envsubst '$PORT' < /etc/nginx/templates.default.conf.template > /etc/nginx/conf.d/default.conf
 exec "$@"
 EOF
 
-# Drop privileges for runtime (nginx user exists in this image)
+# Da permisos de escritura al usuario nginx sobre la carpeta de config de nginx
+RUN chown -R nginx:nginx /etc/nginx/conf.d
+
+# Cambia a usuario nginx para el runtime seguro
 USER nginx
 
-# Expose the dynamic port (informational)
+# Exponer el puerto dinámico (informativo)
 EXPOSE 10000
 STOPSIGNAL SIGTERM
 
-# Use our entrypoint to inject $PORT then start NGINX in foreground
+# Usa nuestro entrypoint para inyectar $PORT y lanzar nginx
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]
