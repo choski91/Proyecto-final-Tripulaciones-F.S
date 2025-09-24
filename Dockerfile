@@ -5,17 +5,22 @@ FROM node:18-alpine AS build
 ENV NODE_ENV=production
 WORKDIR /app
 
-# Install backend deps (production only)
+# 1. Instala dependencias del backend
 COPY package*.json ./
 RUN npm ci --omit=dev
 
-# Copy source
+# 2. Copia solo los archivos de dependencias del frontend y las instala
+WORKDIR /app/client
+COPY client/package*.json ./
+RUN npm ci
+
+# 3. Copia el resto del código fuente (backend y frontend)
+WORKDIR /app
 COPY . .
 
-# Build frontend assets
+# 4. Build de frontend
 WORKDIR /app/client
-RUN ls -lah /app/client && cat /app/client/package.json
-RUN npm ci && npm run build
+RUN npm run build
 
 # Stage 2: Runtime (minimal, non-root, no build tools)
 FROM node:18-alpine AS runtime
