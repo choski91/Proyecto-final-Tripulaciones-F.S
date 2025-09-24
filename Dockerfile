@@ -14,6 +14,7 @@ COPY . .
 
 # Build frontend assets
 WORKDIR /app/client
+RUN ls -lah /app/client && cat /app/client/package.json
 RUN npm ci && npm run build
 
 # Stage 2: Runtime (minimal, non-root, no build tools)
