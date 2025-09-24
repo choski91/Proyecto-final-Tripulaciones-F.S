@@ -5,19 +5,17 @@
 # - Clean shutdown with SIGTERM, security headers, SPA history fallback
 
 # ---------- BUILD: compile assets with devDependencies (includes Vite) ----------
+# Stage 1: Build frontend
 FROM node:22-alpine AS build
-WORKDIR /app
+WORKDIR /app/client
 
-# Copy lockfiles first for reproducible installs
-COPY package.json package-lock.json ./
-# IMPORTANT: install devDependencies so Vite exists for `npm run build`
+COPY client/package.json client/package-lock.json ./
 RUN npm ci
-
-# Copy the rest of the source and build
-COPY . .
+COPY client ./
 RUN npm run build
 
 # ---------- RUNTIME: NGINX minimal, non-root, dynamic port ----------
+# Stage 2: NGINX runtime
 FROM nginx:1.27-alpine AS runtime
 
 # Use a non-privileged port by default (Render sets $PORT)
@@ -28,7 +26,7 @@ USER root
 RUN apk add --no-cache gettext
 
 # Copy built static assets
-COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=build /app/client/dist /usr/share/nginx/html
 
 # Provide nginx config template (uses $PORT) and a tiny entrypoint to render it
 # nginx.conf.template
