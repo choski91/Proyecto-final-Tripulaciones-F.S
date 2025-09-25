@@ -1,0 +1,18 @@
+@use "../utils/variables.scss" as *;
+
+.auth__logo {
+  width: 180px;
+  max-width: 90vw;
+  height: auto;
+  margin-bottom: 2rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 600px) {
+  .auth__logo {
+    width: 260px;
+    max-width: 100%;
+  }
+}

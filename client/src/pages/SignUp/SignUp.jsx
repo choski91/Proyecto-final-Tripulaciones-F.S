@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+
 const apiUrlRender = (window._env_?.VITE_BACKEND_URL) || "http://localhost:3000";
 
 export default function SignUp() {
@@ -49,6 +50,7 @@ export default function SignUp() {
     <main className="auth">
       <section className="auth__card">
         <header className="auth__header">
+          <img src="/logotripulacion.png" alt="Logo" className="auth__logo" />
           <h1>Crea tu cuenta</h1>
           <p>Plataforma SIRP — Capgemini</p>
         </header>
