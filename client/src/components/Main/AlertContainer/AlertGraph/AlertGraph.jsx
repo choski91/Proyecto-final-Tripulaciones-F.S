@@ -76,7 +76,7 @@ const DownloadButtonRenderer = (props) => {
     }
     try {
       setDownloading(true);
-      const url = `https://desafio-4w98.onrender.com/api/report_by_id?attack=${encodeURIComponent(
+      const url = `https://desafio2025.onrender.com/api/report_by_id?attack=${encodeURIComponent(
         attack
       )}&alert_id=${encodeURIComponent(alertId)}`;
       const resp = await fetch(url, { method: "GET" });
