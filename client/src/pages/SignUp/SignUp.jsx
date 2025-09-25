@@ -50,7 +50,7 @@ export default function SignUp() {
     <main className="auth">
       <section className="auth__card">
         <header className="auth__header">
-          <img src="/logotripulacion.png" alt="Logo" className="auth__logo" />
+          <img src="/logo2.0.png" alt="Logo" className="auth__logo" />
           <h1>Crea tu cuenta</h1>
           <p>Plataforma SIRP — Capgemini</p>
         </header>

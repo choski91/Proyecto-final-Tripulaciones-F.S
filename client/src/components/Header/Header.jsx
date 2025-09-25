@@ -14,7 +14,7 @@ const Header = () => {
   return (
     <header className="header">
       <div className="header__icon">
-        <img src="/logotripulacion.png" alt="Logo" />
+        <img src="/logo2.0.png" alt="Logo" />
       </div>
       <button
         className={`header__burger${open ? " header__burger--open" : ""}`}
