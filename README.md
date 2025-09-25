@@ -41,7 +41,7 @@
 | **Frontend**   | React (SPA, mobile-first) + SASS |
 | **Backend**    | Node.js + Express         |
 | **Enrichment** | Integración con APIs externas (VirusTotal, AbuseIPDB…) |
-| **DB**         | Base de datos SQL/NoSQL según modelo |
+| **DB**         | Base de datos SQL         |
 | **Infra**      | Docker + Render           |
 
 ---
@@ -50,11 +50,52 @@
 
 ```bash
 defender-monitor/
-├── backend/          # API REST Node.js + Express
-├── frontend/         # Interfaz React + SASS
+├── backend/                             # API REST Node.js + Express
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── services/
+│   ├── app.js
+│   └── package.json
+├── client/                              # Interfaz React + SASS
+│   ├── public/
+│   │   └── logotripulacion.png
+│   ├── src/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   │   ├── Main/
+│   │   │   │   ├── AlertContainer/
+│   │   │   │   │   ├── AlertGraph/
+│   │   │   │   │   │   └── AlertGraph.jsx
+│   │   │   │   │   ├── AlertList/
+│   │   │   │   │   ├── AlertSearch/
+│   │   │   │   │   │   └── AlertSearch.jsx
+│   │   │   │   │   └── SimulateAttack/
+│   │   │   │   ├── Graficos/
+│   │   │   │   ├── KpiCards/
+│   │   │   │   └── Header/
+│   │   ├── pages/
+│   │   │   ├── Login/
+│   │   │   │   └── Login.jsx
+│   │   │   ├── SignUp/
+│   │   │   │   └── SignUp.jsx
+│   │   ├── styles/
+│   │   │   ├── components/
+│   │   │   │   ├── _AlertGraph.scss
+│   │   │   │   ├── _AlertSearch.scss
+│   │   │   │   ├── _Header.scss
+│   │   │   │   ├── _Footer.scss
+│   │   │   │   ├── _Login.scss
+│   │   │   │   ├── _Signup.scss
+│   │   │   └── styles.scss
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   └── package.json
 ├── docker-compose.yml
 ├── Dockerfile
 └── README.md
+```
+
 ⚙️ Instalación y uso en local
 1️⃣ Clonar el repositorio
 
@@ -99,6 +140,10 @@ Vincular repositorio y Render se encarga del resto.
  Exportación de informes en PDF
 
  Métricas avanzadas (MTTR, tendencias)
+
+ Visita la Web del Proyecto:
+
+ https://proyecto-final-tripulaciones-f-s-bpzh.onrender.com/
 
 🤝 Créditos
 Desarrollado por el equipo multidisciplinar Ciberseguridad + Data Science + Fullstack dentro del Desafío de Tripulaciones de The Bridge con mentoría de Capgemini.
