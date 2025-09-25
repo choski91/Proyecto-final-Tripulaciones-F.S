@@ -26,8 +26,8 @@ const Header = () => {
         <span />
       </button>
       <nav className={`header__nav${open ? " header__nav--open" : ""}`}>
-        <Link to="/tabla" className="header__link" onClick={() => setOpen(false)}>Tabla</Link>
-        <Link to="/graficos" className="header__link" onClick={() => setOpen(false)}>Gráfico</Link>
+        <Link to="/historico" className="header__link" onClick={() => setOpen(false)}>Histórico</Link>
+        <Link to="/monitor" className="header__link" onClick={() => setOpen(false)}>Monitor</Link>
         <Link to="/simulador" className="header__link" onClick={() => setOpen(false)}>Simulador</Link>
         <Link to="/login" className="header__logout" onClick={() => setOpen(false)}>Log Out</Link>
       </nav>
