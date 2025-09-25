@@ -1,0 +1,15 @@
+@use './views/index';
+@use './views/App';
+
+@use './components/Form';
+@use './components/AlertGraph';
+@use './components/SimulateAttack';
+@use 'components/AlertContainer';
+@use 'components/AlertSearch';
+@use 'components/Header';
+@use 'components/Footer';
+@use 'components/AlertCard';
+@use 'components/Graficos';
+@use 'components/KpiCards';
+@use 'components/Login';
+@use 'components/Signup';

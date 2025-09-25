@@ -1,0 +1,117 @@
+@import "../utils/variables";
+
+/* Layout base */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+html, body, #root, main {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.graficos,
+.alert-container,
+.form,
+.simulate-attack,
+.kpi-cards,
+.header,
+.footer {
+  width: 100%;
+  max-width: 100%;
+}
+
+body {
+  font-family: $font-stack;
+  font-size: 16px;
+  line-height: 1.5;
+  background-color: #fff; // 👈 fondo blanco solicitado
+  color: $color-primary-600; // texto base en azul elegante
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Root para React */
+#root {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+/* Encabezados */
+h1, h2, h3, h4, h5, h6 {
+  margin: 1rem 0 0.5rem 0;
+  font-weight: 600;
+  line-height: 1.2;
+  color: $color-primary;
+}
+
+/* Párrafos */
+p {
+  margin: 0.5rem 0;
+  color: $color-primary-600;
+}
+
+/* Listas */
+ul, ol {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+/* Enlaces */
+a {
+  color: $color-primary;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    color: $color-primary-600;
+    text-decoration: underline;
+  }
+}
+
+/* Footer */
+.footer {
+  margin-top: auto;
+  background: $color-surface; // contraste con el fondo blanco
+  border-top: 1px solid $color-border;
+  color: $color-text;
+  padding: 1rem;
+  text-align: center;
+  border-radius: $radius-sm $radius-sm 0 0;
+  box-shadow: $shadow-1;
+
+  a {
+    color: $color-accent;
+
+    &:hover {
+      color: $color-accent-2;
+    }
+  }
+}
+
+/* Breakpoints */
+@media (min-width: $bp-md) {
+  main {
+    padding: 2rem;
+  }
+}
+
+@media (min-width: $bp-lg) {
+  main {
+    padding: 3rem;
+  }
+}

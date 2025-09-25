@@ -1,0 +1,187 @@
+@import "../utils/variables";
+
+// Contenedor de la sección
+.alert-graph {
+  background: $color-bg;
+  color: $color-text;
+   width: 100%;
+  max-width: 100%;   
+  border-radius: $radius-lg;
+}
+
+.alert-graph__actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem; // Espacio entre el select y el botón
+  margin-bottom: 1rem;
+}
+
+// Wrapper con scroll horizontal en móviles
+.ag-theme-alpine.custom-table {
+  width: 100%;
+  overflow: auto;        // permite scroll horizontal en pantallas pequeñas
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-1;
+  background: $color-surface;
+
+  // ===== AG Grid CSS variables (Alpine) =====
+  --ag-font-family: #{$font-stack};
+  --ag-foreground-color: #{$color-text};
+  --ag-background-color: #{$color-surface};
+  --ag-secondary-foreground-color: #{$color-text-muted};
+  --ag-header-background-color: #{$color-primary};
+  --ag-header-foreground-color: #fff;
+  --ag-border-color: #{$color-border};
+  --ag-odd-row-background-color: #{mix($color-surface, #000, 90%)};
+  --ag-row-hover-color: #{rgba(0, 161, 222, .08)};
+  --ag-selected-row-background-color: #{rgba(0, 112, 173, .18)};
+  --ag-checkbox-unchecked-color: #{$color-text-muted};
+  --ag-input-focus-border-color: #{$color-accent};
+  --ag-row-border-style: solid;
+
+  // Densidad compacta por defecto (mobile-first)
+  --ag-grid-size: 5px;     // padding interno
+  --ag-row-height: 40px;
+  --ag-header-height: 44px;
+
+  // Header sticky (cuando el contenedor hace scroll)
+  .ag-header {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+  }
+
+  // Celdas y columnas
+  .ag-cell, .ag-header-cell {
+    font-size: .9rem;
+    line-height: 1.3;
+  }
+
+  // Zebra + bordes más sutiles
+  .ag-row-odd {
+    background: var(--ag-odd-row-background-color);
+  }
+
+  // Filtros/inputs
+  .ag-input-field-input,
+  .ag-filter {
+    background: $color-surface;
+    color: $color-text;
+    border-color: $color-border;
+  }
+
+  // Paginación
+  .ag-paging-panel,
+  .ag-status-bar {
+    background: $color-surface;
+    color: $color-text-muted;
+    border-top: 1px solid $color-border;
+
+    .ag-paging-button {
+      border-radius: $radius-sm;
+      background: transparent;
+      color: $color-text;
+
+      &:hover {
+        background: rgba(255,255,255,.06);
+      }
+
+      &.ag-disabled {
+        opacity: .5;
+      }
+    }
+  }
+
+  // Scrollbars (WebKit)
+  &::-webkit-scrollbar {
+    height: 10px; // horizontal
+    width: 10px;  // vertical (por si acaso)
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $color-border;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background: darken($color-surface, 3%);
+  }
+}
+
+// ===== Breakpoints (mobile-first) =====
+@media (min-width: $bp-sm) {
+  .ag-theme-alpine.custom-table {
+    --ag-row-height: 44px;
+    --ag-header-height: 48px;
+  }
+}
+
+@media (min-width: $bp-md) {
+  .ag-theme-alpine.custom-table {
+    --ag-grid-size: 6px;
+    --ag-row-height: 48px;
+    --ag-header-height: 52px;
+
+    .ag-cell, .ag-header-cell {
+      font-size: .95rem;
+    }
+  }
+}
+
+@media (min-width: $bp-lg) {
+  .ag-theme-alpine.custom-table {
+    --ag-grid-size: 7px;
+    --ag-row-height: 52px;
+    --ag-header-height: 56px;
+
+    .ag-cell, .ag-header-cell {
+      font-size: 1rem;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .alert-graph__actions {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .alert-graph__actions select,
+  .alert-graph__actions .btn-report {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 1rem;
+  }
+}
+
+.btn-report {
+  appearance: none;
+  border: 0;
+  border-radius: 9999px;
+  padding: 10px 18px;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(90deg, #0b76c5 0%, #55b6ea 100%);
+  box-shadow: 0 6px 16px rgba(11, 118, 197, 0.35);
+  transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease, opacity 120ms ease;
+  white-space: nowrap;
+}
+
+.btn-report:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+  box-shadow: 0 10px 22px rgba(11, 118, 197, 0.45);
+  cursor: pointer;
+}
+
+.btn-report:active:not(:disabled) {
+  transform: translateY(0);
+  filter: brightness(0.98);
+  box-shadow: 0 4px 10px rgba(11, 118, 197, 0.35);
+}
+
+.btn-report:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: 0 4px 10px rgba(11, 118, 197, 0.25);
+}

@@ -1,0 +1,68 @@
+@use "../utils/variables.scss" as *;
+
+.alert-search {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.75rem;
+  margin: 1rem 0;
+  width: 100%;
+
+  label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  select,
+  .export-csv-btn {
+    font-size: 1.18rem;
+    font-weight: 600;
+    color: #fff !important;
+    background: linear-gradient(90deg, #0070ad 60%, #00c6fb 100%);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,112,173,0.08);
+    transition:
+      background 0.18s cubic-bezier(0.4,0,0.2,1),
+      transform 0.15s cubic-bezier(0.4,0,0.2,1),
+      box-shadow 0.18s;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0.8rem 1.5rem;
+    text-align: center;
+  }
+
+  select {
+    appearance: none;
+    background: #0070ad !important;
+    color: #fff !important;
+    border: 1px solid #0070ad;
+    box-shadow: 0 2px 8px rgba(0,112,173,0.08);
+    border-radius: 6px;
+    font-size: 1.18rem;
+    font-weight: 600;
+    padding: 0.8rem 1.5rem;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    text-align: center;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='18' viewBox='0 0 24 24' width='18' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.2em;
+
+    // Fuerza el color y fondo de las opciones desplegadas
+    option {
+      color: #fff !important;
+      background: #0070ad !important;
+    }
+  }
+
+  .export-csv-btn {
+    margin: 0;
+  }
+}

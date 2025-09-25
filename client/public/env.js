@@ -1,0 +1,4 @@
+window._env_ = {
+  VITE_BACKEND_PYTHON: "__VITE_BACKEND_PYTHON__",
+  VITE_BACKEND_URL: "__VITE_BACKEND_URL__"
+};
