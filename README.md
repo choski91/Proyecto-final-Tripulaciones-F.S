@@ -1,3 +1,5 @@
+![Logo Defender Monitor](client/src/assets/imagenes/Portadadefender.png)
+
 🛡️ Defender Monitor
 
 ## 🚀 Introducción  
@@ -43,6 +45,18 @@
 | **Enrichment** | Integración con APIs externas (VirusTotal, AbuseIPDB…) |
 | **DB**         | Base de datos SQL         |
 | **Infra**      | Docker + Render           |
+
+## Arquitectura del Proyecto
+
+![Arquitectura](client/src/assets/imagenes/arquitectura.jpg)
+
+## Modelo de Base de Datos
+
+![Modelobbdd](client/src/assets/imagenes/diagramaentidad.jpg)
+
+## Modelo Entidad Relación
+
+![ModeloER](client/src/assets/imagenes/diagramarelacional.png)
 
 ---
 
@@ -95,6 +109,17 @@ defender-monitor/
 ├── Dockerfile
 └── README.md
 ```
+## 📸 Capturas
+![Login](client/src/assets/imagenes/login.png)
+![historico](client/src/assets/imagenes/historico.png)
+![graph1](client/src/assets/imagenes/graph1.png)
+![graph2](client/src/assets/imagenes/graph2.png)
+![graph3](client/src/assets/imagenes/graph3.png)
+![simulacion](client/src/assets/imagenes/Simulacion.png)
+![historicomobile](client/src/assets/imagenes/Historicomobile.png)
+![burgermenu](client/src/assets/imagenes/mobileburgermenu.png)
+![graph](client/src/assets/imagenes/graphmobile.png)
+![simuladormobile](client/src/assets/imagenes/simuladormobile.png)
 
 ⚙️ Instalación y uso en local
 1️⃣ Clonar el repositorio
