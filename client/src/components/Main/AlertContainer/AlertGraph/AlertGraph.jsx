@@ -11,36 +11,6 @@ const HEADER_HEIGHT = 50;
 const PADDING = 50;
 
 // Estilos del botón "pill" con degradado azul similar al ejemplo
-const BTN_STYLES = `
-  .btn-report {
-    appearance: none;
-    border: 0;
-    border-radius: 9999px;
-    padding: 10px 18px;
-    font-weight: 600;
-    color: #ffffff;
-    background: linear-gradient(90deg, #0b76c5 0%, #55b6ea 100%);
-    box-shadow: 0 6px 16px rgba(11, 118, 197, 0.35);
-    transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease, opacity 120ms ease;
-    white-space: nowrap;
-  }
-  .btn-report:hover:not(:disabled) {
-    transform: translateY(-1px);
-    filter: brightness(1.03);
-    box-shadow: 0 10px 22px rgba(11, 118, 197, 0.45);
-    cursor: pointer;
-  }
-  .btn-report:active:not(:disabled) {
-    transform: translateY(0);
-    filter: brightness(0.98);
-    box-shadow: 0 4px 10px rgba(11, 118, 197, 0.35);
-  }
-  .btn-report:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    box-shadow: 0 4px 10px rgba(11, 118, 197, 0.25);
-  }
-`;
 
 const formatFechaLocal = (v) => {
   if (!v) return "";
@@ -235,7 +205,6 @@ function AlertGraph({
   return (
     <section className="alert-graph">
       {/* Inyección de estilos locales del botón */}
-      <style dangerouslySetInnerHTML={{ __html: BTN_STYLES }} />
       <article
         className="ag-theme-alpine custom-table"
         style={{ width: "100%", height: `${dynamicHeight}px` }}
