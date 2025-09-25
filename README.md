@@ -175,4 +175,4 @@ Vincular repositorio y Render se encarga del resto.
  https://proyecto-final-tripulaciones-f-s-bpzh.onrender.com/
 
 🤝 Créditos
-Desarrollado por el equipo multidisciplinar Ciberseguridad + Data Science + Fullstack dentro del Desafío de Tripulaciones de The Bridge con mentoría de Capgemini.
+Fullstack Team.
