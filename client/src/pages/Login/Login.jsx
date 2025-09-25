@@ -44,7 +44,7 @@ export default function Login() {
     <main className="auth">
       <section className="auth__card">
         <header className="auth__header">
-          <img src="/logotripulacion.png" alt="Logo" className="auth__logo" />
+          <img src="/logo2.0.png" alt="Logo" className="auth__logo" />
           <h1>Inicia sesión</h1>
           <p>Plataforma SIRP — Capgemini</p>
         </header>
