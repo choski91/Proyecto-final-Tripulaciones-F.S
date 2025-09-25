@@ -128,7 +128,7 @@ defender-monitor/
 Copiar código
 git clone 
 https://github.com/choski91/Proyecto-final-Tripulaciones-F.S.git
-
+```
 2️⃣ Backend
 
 ```bash
@@ -137,19 +137,20 @@ npm install
 npm run dev
 3️⃣ Frontend Abrir la app: 
 http://localhost:5173
-
+```
 ```bash
 npm install
 npm start
 4️⃣ Abrir el back: 
 http://localhost:3000
-
+```
 🐳 Despliegue con Docker
 Construir y levantar contenedores:
 
 ```bash
 Copiar código
 docker-compose up --build
+```
 Esto levanta backend y frontend listos para Render.
 
 
