@@ -88,6 +88,7 @@ ORDER BY a.id DESC;
 
   // Alertas
   getAlertLogin: `SELECT 
+    a.id,
     a.fecha,
     a.ip,
     e.descripcion    AS estado_desc,
@@ -99,6 +100,7 @@ FROM public.alertas_login_sospechoso a
 INNER JOIN estado_alerta e ON e.id_status = a.id_status
 INNER JOIN tipos_ataques t ON t.id_tipo = a.id_tipo;`,
   getAlertPhishing: `SELECT 
+    p.id,
     p.fecha,
     p.ip,
     e.descripcion    AS estado_desc,
@@ -110,6 +112,7 @@ FROM public.alertas_phishing p
 INNER JOIN estado_alerta e ON e.id_status = p.id_status
 INNER JOIN tipos_ataques t ON t.id_tipo = p.id_tipo;`,
   getAlertDdos: `SELECT 
+    d.id,
     d.fecha,
     d.ip,
     e.descripcion    AS estado_desc,
@@ -121,6 +124,7 @@ FROM public.alertas_ddos d
 INNER JOIN estado_alerta e ON e.id_status = d.id_status
 INNER JOIN tipos_ataques t ON t.id_tipo = d.id_tipo;`,
   getAlertDos: `SELECT 
+    d.id,
     d.fecha,
     d.ip,
     e.descripcion    AS estado_desc,
@@ -132,6 +136,7 @@ FROM public.alertas_dos d
 INNER JOIN estado_alerta e ON e.id_status = d.id_status
 INNER JOIN tipos_ataques t ON t.id_tipo = d.id_tipo;`,
   getAlertFuerzaBruta: `SELECT 
+    f.id,
     f.fecha,
     f.ip,
     e.descripcion    AS estado_desc,
