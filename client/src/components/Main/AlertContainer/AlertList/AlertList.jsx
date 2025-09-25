@@ -29,7 +29,7 @@ export default function AlertList() {
           <AlertCard key={idx} alert={alert} />
         ))}
       </div> */}
-      <iframe src="https://desafio-4w98.onrender.com" frameborder="0" style={{ width: "100%", height: "700px" }}></iframe>
+      <iframe src="https://desafio2025.onrender.com" frameborder="0" style={{ width: "100%", height: "700px" }}></iframe>
     </>
   );
 }
