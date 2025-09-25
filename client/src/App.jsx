@@ -29,9 +29,9 @@ function App() {
         <Route path="/login" element={<LogIn />} />
         <Route path="/logout" element={<LogIn />} />
         {/* <Route path="/home" element={<AlertContainer />} /> */}
-        <Route path="/tabla" element={<AlertContainer />} />
+        <Route path="/historico" element={<AlertContainer />} />
         <Route path="/simulador" element={<AlertList />} />
-        <Route path="/graficos" element={<Graficos />} />
+        <Route path="/monitor" element={<Graficos />} />
       </Routes>
       {!hideHeader && <Footer />}
     </>
