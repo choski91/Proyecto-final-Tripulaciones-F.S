@@ -24,9 +24,9 @@ const AlertSearch = ({ attackType, setAttackType, tableData }) => {
 
   return (
     <div className="alert-search">
-      <label htmlFor="attackType">Tipo de ataque:</label>
+      <label htmlFor="tipoAtaque">Tipo de ataque:</label>
       <select
-        id="attackType"
+        id="tipoAtaque"
         value={attackType}
         onChange={e => setAttackType(e.target.value)}
       >
@@ -40,7 +40,6 @@ const AlertSearch = ({ attackType, setAttackType, tableData }) => {
       <button
         type="button"
         className="export-csv-btn"
-        style={{ marginLeft: "1rem" }}
         onClick={handleExportCSV}
       >
         Exportar CSV
