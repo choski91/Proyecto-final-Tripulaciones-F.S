@@ -60,23 +60,20 @@ defender-monitor/
 
 bash
 Copiar código
-git clone https://github.com/tuusuario/defender-monitor.git
-cd defender-monitor
+git clone https://github.com/choski91/Proyecto-final-Tripulaciones-F.S.git
+
 2️⃣ Backend
 
 bash
-Copiar código
-cd backend
+cd client
 npm install
 npm run dev
-3️⃣ Frontend
+3️⃣ Frontend Abrir la app: http://localhost:5173
 
 bash
-Copiar código
-cd frontend
 npm install
 npm start
-4️⃣ Abrir la app: http://localhost:3000
+4️⃣ Abrir el back: http://localhost:3000
 
 🐳 Despliegue con Docker
 Construir y levantar contenedores:
