@@ -1,96 +1,107 @@
 🛡️ Defender Monitor
 
-Defender Monitor es una plataforma colaborativa SIRP (Security Incident Response Platform) desarrollada en el marco del Desafío de Tripulaciones de The Bridge junto a Capgemini.
-Su objetivo es recibir, enriquecer, gestionar y visualizar alertas de ciberseguridad en tiempo real, integrando scoring de riesgo y sugerencias de respuesta para ayudar a las organizaciones a priorizar y actuar frente a incidentes.
+## 🚀 Introducción  
 
-🎯 Propósito
+**Defender Monitor** es una plataforma colaborativa **SIRP (Security Incident Response Platform)** desarrollada en el marco del **Desafío de Tripulaciones** de The Bridge con mentoría de **Capgemini**.  
 
-A diferencia de un SIEM clásico, Defender Monitor se centra en la gestión activa y colaborativa de incidentes, proporcionando:
+🔹 Recibe, enriquece, gestiona y visualiza alertas de ciberseguridad.  
+🔹 Integra scoring de riesgo y sugerencias de respuesta para ayudar a priorizar incidentes.  
+🔹 Desplegada con **Docker** y lista para producción en **Render**.  
 
-Centralización y enriquecimiento de alertas.
+---
 
-Scoring automático y priorización inteligente.
+## 🎯 Propósito  
 
-Dashboards y métricas en tiempo real.
+> A diferencia de un SIEM clásico, **Defender Monitor** se centra en la **gestión activa y colaborativa** de incidentes.
 
-Simulación de incidentes para entrenamiento y pruebas.
+- 📥 Centralización y enriquecimiento de alertas.  
+- 🧠 Scoring automático y priorización inteligente.  
+- 📊 Dashboards y métricas en tiempo real.  
+- 📝 Simulación de incidentes para entrenamiento.  
+- 📄 Posible generación de informes PDF y playbooks automáticos.  
 
-Posible generación de informes PDF y playbooks automáticos.
+---
 
-🧠 Funcionalidades principales
+## 🧠 Funcionalidades principales  
 
-Recepción de alertas simuladas (intentos de login sospechoso, phishing, ataques DDoS).
+✅ Recepción de alertas simuladas *(login sospechoso, phishing, DDoS)*.  
+✅ Enriquecimiento automático vía APIs externas *(VirusTotal, AbuseIPDB…)*.  
+✅ Scoring de riesgo para priorizar incidentes.  
+✅ Gestión del ciclo de vida de cada alerta/incidente.  
+✅ Dashboards interactivos con métricas clave.  
+✅ Interfaz moderna y responsive *(React + SASS)*.  
+✅ Despliegue en contenedores Docker para Render.  
 
-Enriquecimiento automático vía APIs externas (VirusTotal, AbuseIPDB…).
+---
 
-Scoring de riesgo para priorizar incidentes.
+## 🛠️ Tecnologías utilizadas  
 
-Gestión del ciclo de vida de cada alerta/incidente.
+| Capa           | Tecnología               |
+| -------------- | ------------------------ |
+| **Frontend**   | React (SPA, mobile-first) + SASS |
+| **Backend**    | Node.js + Express         |
+| **Enrichment** | Integración con APIs externas (VirusTotal, AbuseIPDB…) |
+| **DB**         | Base de datos SQL/NoSQL según modelo |
+| **Infra**      | Docker + Render           |
 
-Dashboards interactivos con métricas clave.
+---
 
-Interfaz moderna y responsive desarrollada con React + SASS.
+## 📂 Estructura del proyecto  
 
-Despliegue en contenedores Docker para Render.
-
-🛠️ Tecnologías utilizadas
-
-Frontend: React (SPA, mobile-first) + SASS
-
-Backend: Node.js + Express
-
-Enrichment/API: Integración con servicios externos (VirusTotal, AbuseIPDB, etc.)
-
-Persistencia: Base de datos (SQL/NoSQL según modelo de datos)
-
-Infraestructura: Docker + Render
-
-📂 Estructura del proyecto
-
-Proyecto-final-Tripulaciones-F.S.
-
-├── client/           # Interfaz React + SASS
-├── config/         # Node.js + Express
-├── controllers
-├── models
-├── routes
-├── utils
-├── app.js
+```bash
+defender-monitor/
+├── backend/          # API REST Node.js + Express
+├── frontend/         # Interfaz React + SASS
+├── docker-compose.yml
 ├── Dockerfile
 └── README.md
-
 ⚙️ Instalación y uso en local
+1️⃣ Clonar el repositorio
 
-Clonar el repositorio
+bash
+Copiar código
+git clone https://github.com/tuusuario/defender-monitor.git
+cd defender-monitor
+2️⃣ Backend
 
-git clone https://github.com/choski91/Proyecto-final-Tripulaciones-F.S.git
-
-
-Backend
-
-npm install
-npm start
-
-Accede desde http://localhost:3000
-
-Frontend
-
-cd client
+bash
+Copiar código
+cd backend
 npm install
 npm run dev
+3️⃣ Frontend
 
-
-Accede desde http://localhost:5173
+bash
+Copiar código
+cd frontend
+npm install
+npm start
+4️⃣ Abrir la app: http://localhost:3000
 
 🐳 Despliegue con Docker
-
 Construir y levantar contenedores:
 
+bash
+Copiar código
 docker-compose up --build
+Esto levanta backend y frontend listos para Render.
 
 
-Esto levanta backend y frontend listos para despliegue en Render.
+🖥️ Producción en Render
+Proyecto configurado para Deploy from Docker en Render.
+
+Vincular repositorio y Render se encarga del resto.
+
+📊 Roadmap
+ Recepción y enriquecimiento de alertas
+
+ Dashboard inicial con métricas
+
+ Playbooks automáticos de respuesta
+
+ Exportación de informes en PDF
+
+ Métricas avanzadas (MTTR, tendencias)
 
 🤝 Créditos
-
 Desarrollado por el equipo multidisciplinar Ciberseguridad + Data Science + Fullstack dentro del Desafío de Tripulaciones de The Bridge con mentoría de Capgemini.
