@@ -9,6 +9,14 @@
   border-radius: $radius-lg;
 }
 
+.alert-graph__actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem; // Espacio entre el select y el botón
+  margin-bottom: 1rem;
+}
+
 // Wrapper con scroll horizontal en móviles
 .ag-theme-alpine.custom-table {
   width: 100%;
@@ -129,6 +137,20 @@
     .ag-cell, .ag-header-cell {
       font-size: 1rem;
     }
+  }
+}
+
+@media (max-width: 600px) {
+  .alert-graph__actions {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .alert-graph__actions select,
+  .alert-graph__actions .btn-report {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 1rem;
   }
 }
 

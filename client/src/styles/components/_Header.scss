@@ -129,7 +129,7 @@
       background 0.18s cubic-bezier(0.4,0,0.2,1),
       transform 0.15s cubic-bezier(0.4,0,0.2,1),
       box-shadow 0.18s;
-    margin-right: 5px;
+    margin-right: 36px; // Mas alejado del borde derecho
     width: auto;
     display: inline-block;
     text-decoration: none;
@@ -179,6 +179,10 @@
           background: #e6f0fa;
           color: #005a8c;
         }
+      }
+
+      .header__logout {
+        margin-right: 0; // Sin margen en móvil
       }
     }
     &__nav.header__nav--open {
